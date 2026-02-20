@@ -1,0 +1,66 @@
+// {
+//   "compilerOptions": {
+//     "module": "NodeNext",
+//     "moduleResolution": "NodeNext",
+//     "target": "ESNext",
+//     "sourceMap": true,
+//     "outDir": "dist",
+//     "strict": true,
+//     "lib": [
+//       "esnext",
+//       "dom"
+//     ],
+//     "esModuleInterop": true,
+//     "resolveJsonModule": true,
+//     "skipLibCheck": true,
+//     "allowSyntheticDefaultImports": true
+//     ,
+//     "typeRoots": [
+//       "./src/types",
+//       "./node_modules/@types"
+//     ]
+//   },
+//   "include": [
+//     "src/**/*",
+//     "./tesseract-override.d.ts",
+//     "./declaration.d.ts"
+//   ]
+// }
+// now i comment {
+//   "compilerOptions": {
+//     "module": "NodeNext",
+//     "moduleResolution": "NodeNext",
+//     "target": "ESNext",
+//     "strict": true,
+
+//     "types": ["node", "express"],
+//     "typeRoots": ["./src/types", "./node_modules/@types"]
+//   },
+//   "include": ["src/**/*"]
+// }
+
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+
+    "rootDir": "src",
+    "outDir": "dist",
+
+    "strict": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    "skipLibCheck": true,
+    "incremental": true,
+
+    "allowJs": false,
+    "noEmitOnError": true,
+
+    "types": ["node", "express"],
+    "typeRoots": ["./src/types", "./node_modules/@types"]
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
+

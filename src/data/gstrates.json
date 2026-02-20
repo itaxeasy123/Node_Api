@@ -1,0 +1,38 @@
+{
+    "GST_Rates": {
+      "0%": [
+        "Unprocessed cereals",
+        "Fresh fruits",
+        "Educational services"
+      ],
+      "5%": [
+        "Edible oils",
+        "Sugar",
+        "Domestic LPG"
+      ],
+      "12%": [
+        "Butter",
+        "Ghee",
+        "Mobile phones",
+        "Certain renewable energy devices"
+      ],
+      "18%": [
+        "Hair oil",
+        "Toothpaste",
+        "Industrial intermediaries",
+        "Scrap and polyurethanes",
+        "Pens",
+        "Metal concentrates and ores",
+        "Recorded media reproduction and print",
+        "Packing containers and boxes",
+        "Broadcasting, sound recordings, licensing",
+        "Printed material",
+        "Railway goods and parts (Chapter 86)"
+      ],
+      "28%": [
+        "High-end automobiles",
+        "Tobacco products",
+        "Aerated drinks"
+      ]
+    }
+  }

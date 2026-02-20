@@ -1,0 +1,2402 @@
+[
+  {
+    "SACCode": 99,
+    "SACDescription": "All Services"
+  },
+  {
+    "SACCode": 9954,
+    "SACDescription": "Construction services"
+  },
+  {
+    "SACCode": 995411,
+    "SACDescription": "Construction services of single dwelling or multi dwelling or multi-storied residential buildings"
+  },
+  {
+    "SACCode": 995412,
+    "SACDescription": "Construction services of other residential buildings such as old age homes, homeless shelters, hostels etc"
+  },
+  {
+    "SACCode": 995413,
+    "SACDescription": "Construction services of industrial buildings such as buildings used for production activities (used for assembly line activities), workshops, storage buildings and other similar industrial buildings"
+  },
+  {
+    "SACCode": 995414,
+    "SACDescription": "Construction services of commercial buildings such as office buildings, exhibition & marriage halls, malls, hotels, restaurants, airports, rail or road terminals, parking garages, petrol and service stations, theatres and other similar buildings."
+  },
+  {
+    "SACCode": 995415,
+    "SACDescription": "Construction services of other non-residential buildings such as educational institutions, hospitals, clinics including vertinary clinics, religious establishments, courts, prisons, museums and other similar buildings"
+  },
+  {
+    "SACCode": 995416,
+    "SACDescription": "Construction Services of other buildings n.e.c"
+  },
+  {
+    "SACCode": 995419,
+    "SACDescription": "Services involving Repair, alterations, additions, replacements, renovation, maintenance or remodelling of the buildings covered above."
+  },
+  {
+    "SACCode": 995421,
+    "SACDescription": "General construction services of highways, streets, roads, railways and airfield runways, bridges and tunnels"
+  },
+  {
+    "SACCode": 995422,
+    "SACDescription": "General construction services of harbours, waterways, dams, water mains and lines, irrigation and other waterworks"
+  },
+  {
+    "SACCode": 995423,
+    "SACDescription": "General construction services of long-distance underground/overland/submarine pipelines, communication and electric power lines (cables); pumping stations and related works; transformer stations and related works."
+  },
+  {
+    "SACCode": 995424,
+    "SACDescription": "General construction services of local water & sewage pipelines, electricity and communication cables & related works"
+  },
+  {
+    "SACCode": 995425,
+    "SACDescription": "General construction services of mines and industrial plants"
+  },
+  {
+    "SACCode": 995426,
+    "SACDescription": "General Construction services of Power Plants and its related infrastructure"
+  },
+  {
+    "SACCode": 995427,
+    "SACDescription": "General construction services of outdoor sport and recreation facilities"
+  },
+  {
+    "SACCode": 995428,
+    "SACDescription": "General construction services of other civil engineering works n.e.c."
+  },
+  {
+    "SACCode": 995429,
+    "SACDescription": "Services involving Repair, alterations, additions, replacements, renovation, maintenance or remodelling of the constructions covered above."
+  },
+  {
+    "SACCode": 995431,
+    "SACDescription": "Demolition services"
+  },
+  {
+    "SACCode": 995432,
+    "SACDescription": "Site formation and clearance services including preparation services to make sites ready for subsequent construction work, test drilling & boring & core extraction, digging of trenches."
+  },
+  {
+    "SACCode": 995433,
+    "SACDescription": "Excavating and earthmoving services"
+  },
+  {
+    "SACCode": 995434,
+    "SACDescription": "Water well drilling services and septic system installation services"
+  },
+  {
+    "SACCode": 995435,
+    "SACDescription": "Other site preparation services n.e.c"
+  },
+  {
+    "SACCode": 995439,
+    "SACDescription": "Services involving Repair, alterations, additions, replacements, maintenance of the constructions covered above."
+  },
+  {
+    "SACCode": 995441,
+    "SACDescription": "Installation, assembly and erection services of prefabricated buildings"
+  },
+  {
+    "SACCode": 995442,
+    "SACDescription": "Installation, assembly and erection services of other prefabricated structures and constructions"
+  },
+  {
+    "SACCode": 995443,
+    "SACDescription": "Installation services of all types of street furniture (e.g., bus shelters, benches, telephone booths, public toilets, etc.)"
+  },
+  {
+    "SACCode": 995444,
+    "SACDescription": "Other assembly and erection services n.e.c."
+  },
+  {
+    "SACCode": 995449,
+    "SACDescription": "Services involving Repair, alterations, additions, replacements, maintenance of the constructions covered above."
+  },
+  {
+    "SACCode": 995451,
+    "SACDescription": "Pile driving and foundation services"
+  },
+  {
+    "SACCode": 995452,
+    "SACDescription": "Building framing & Roof Framing services"
+  },
+  {
+    "SACCode": 995453,
+    "SACDescription": "Roofing and waterproofing services"
+  },
+  {
+    "SACCode": 995454,
+    "SACDescription": "Concrete services"
+  },
+  {
+    "SACCode": 995455,
+    "SACDescription": "Structural steel erection services"
+  },
+  {
+    "SACCode": 995456,
+    "SACDescription": "Masonry services"
+  },
+  {
+    "SACCode": 995457,
+    "SACDescription": "Scaffolding services"
+  },
+  {
+    "SACCode": 995458,
+    "SACDescription": "Other special trade construction services n.e.c."
+  },
+  {
+    "SACCode": 995459,
+    "SACDescription": "Services involving Repair, alterations, additions, replacements, maintenance of the constructions covered above."
+  },
+  {
+    "SACCode": 995461,
+    "SACDescription": "Electrical installation services including Electrical wiring & fitting services, fire alarm installation services, burglar alarm system installation services."
+  },
+  {
+    "SACCode": 995462,
+    "SACDescription": "Water plumbing and drain laying services"
+  },
+  {
+    "SACCode": 995463,
+    "SACDescription": "Heating, ventilation and air conditioning equipment installation services"
+  },
+  {
+    "SACCode": 995464,
+    "SACDescription": "Gas fitting installation services"
+  },
+  {
+    "SACCode": 995465,
+    "SACDescription": "Insulation services"
+  },
+  {
+    "SACCode": 995466,
+    "SACDescription": "Lift and escalator installation services"
+  },
+  {
+    "SACCode": 995468,
+    "SACDescription": "Other installation services n.e.c."
+  },
+  {
+    "SACCode": 995469,
+    "SACDescription": "Services involving Repair, alterations, additions, replacements, maintenance of the installations covered above."
+  },
+  {
+    "SACCode": 995471,
+    "SACDescription": "Glazing services"
+  },
+  {
+    "SACCode": 995472,
+    "SACDescription": "Plastering services"
+  },
+  {
+    "SACCode": 995473,
+    "SACDescription": "Painting services"
+  },
+  {
+    "SACCode": 995474,
+    "SACDescription": "Floor and wall tiling services"
+  },
+  {
+    "SACCode": 995475,
+    "SACDescription": "Other floor laying, wall covering and wall papering services"
+  },
+  {
+    "SACCode": 995476,
+    "SACDescription": "Joinery and carpentry services"
+  },
+  {
+    "SACCode": 995477,
+    "SACDescription": "Fencing and railing services"
+  },
+  {
+    "SACCode": 995478,
+    "SACDescription": "Other building completion and finishing services n.e.c."
+  },
+  {
+    "SACCode": 995479,
+    "SACDescription": "Services involving Repair, alterations, additions, replacements, maintenance of the completion/finishing works covered above."
+  },
+  {
+    "SACCode": 9961,
+    "SACDescription": "Services in wholesale trade"
+  },
+  {
+    "SACCode": 996111,
+    "SACDescription": "Services provided for a fee/commission or contract basis on wholesale trade"
+  },
+  {
+    "SACCode": 9962,
+    "SACDescription": "Services in retail trade"
+  },
+  {
+    "SACCode": 996211,
+    "SACDescription": "Services provided for a fee/commission or contract basis on retail trade"
+  },
+  {
+    "SACCode": 9963,
+    "SACDescription": "Accommodation, food and beverage services"
+  },
+  {
+    "SACCode": 996311,
+    "SACDescription": "Room or unit accommodation services provided by Hotels, INN, Guest House, Club etc"
+  },
+  {
+    "SACCode": 996312,
+    "SACDescription": "Camp site services"
+  },
+  {
+    "SACCode": 996313,
+    "SACDescription": "Recreational and vacation camp services"
+  },
+  {
+    "SACCode": 996321,
+    "SACDescription": "Room or unit accommodation services for students in student residences"
+  },
+  {
+    "SACCode": 996322,
+    "SACDescription": "Room or unit accommodation services provided by Hostels, Camps, Paying Guest etc"
+  },
+  {
+    "SACCode": 996329,
+    "SACDescription": "Other room or unit accommodation services n.e.c."
+  },
+  {
+    "SACCode": 996331,
+    "SACDescription": "Services provided by Restaurants, Cafes and similar eating facilities including takeaway services, Room services and door delivery of food."
+  },
+  {
+    "SACCode": 996332,
+    "SACDescription": "Services provided by Hotels, INN, Guest House, Club etc including Room services, takeaway services and door delivery of food."
+  },
+  {
+    "SACCode": 996333,
+    "SACDescription": "Services provided in Canteen and other similar establishments"
+  },
+  {
+    "SACCode": 996334,
+    "SACDescription": "Catering Services in Exhibition halls, Events, Marriage Halls and other outdoor/indoor functions."
+  },
+  {
+    "SACCode": 996335,
+    "SACDescription": "Catering services in trains, flights etc."
+  },
+  {
+    "SACCode": 996336,
+    "SACDescription": "Preparation and/or supply services of food, edible preparations, alchoholic & non-alchocholic beverages to airlines and other transportation operators"
+  },
+  {
+    "SACCode": 996337,
+    "SACDescription": "Other contract food services"
+  },
+  {
+    "SACCode": 996339,
+    "SACDescription": "Other food, edible preparations, alchoholic & non-alchocholic beverages serving services n.e.c."
+  },
+  {
+    "SACCode": 9964,
+    "SACDescription": "Passenger transport services"
+  },
+  {
+    "SACCode": 996411,
+    "SACDescription": "Local land transport services of passengers by railways, metro, monorail, bus, tramway, autos, three wheelers, scooters and other motor vehicles"
+  },
+  {
+    "SACCode": 996412,
+    "SACDescription": "Taxi services including radio taxi & other similar services; "
+  },
+  {
+    "SACCode": 996413,
+    "SACDescription": "Non-scheduled local bus and coach charter services"
+  },
+  {
+    "SACCode": 996414,
+    "SACDescription": "Other land transportation services of passengers."
+  },
+  {
+    "SACCode": 996415,
+    "SACDescription": "Local water transport services of passengers by ferries, cruises etc"
+  },
+  {
+    "SACCode": 996416,
+    "SACDescription": "Sightseeing transportation services by rail, land, water & air"
+  },
+  {
+    "SACCode": 996419,
+    "SACDescription": "Other local transportation services of passengers n.e.c."
+  },
+  {
+    "SACCode": 996421,
+    "SACDescription": "Long-distance transport services of passengers through Rail network by Railways, Metro etc"
+  },
+  {
+    "SACCode": 996422,
+    "SACDescription": "Long-distance transport services of passengers through Road by Bus, Car, non-scheduled long distance bus and coach services, stage carriage etc"
+  },
+  {
+    "SACCode": 996423,
+    "SACDescription": "Taxi services including radio taxi & other similar services"
+  },
+  {
+    "SACCode": 996424,
+    "SACDescription": "Coastal and transoceanic (overseas) water transport services of passengers by Ferries, Cruise Ships etc"
+  },
+  {
+    "SACCode": 996425,
+    "SACDescription": "Domestic/International Scheduled Air transport services of passengers"
+  },
+  {
+    "SACCode": 996426,
+    "SACDescription": "Domestic/international non-scheduled air transport services of Passengers"
+  },
+  {
+    "SACCode": 996427,
+    "SACDescription": "Space transport services of passengers"
+  },
+  {
+    "SACCode": 996429,
+    "SACDescription": "Other long-distance transportation services of passengers n.e.c."
+  },
+  {
+    "SACCode": 9965,
+    "SACDescription": "Goods Transport Services"
+  },
+  {
+    "SACCode": 996511,
+    "SACDescription": "Road transport services of Goods including letters, parcels, live animals, household & office furniture, containers etc by refrigerator vehicles, trucks, trailers, man or animal drawn vehicles or any other vehicles."
+  },
+  {
+    "SACCode": 996512,
+    "SACDescription": "Railway transport services of Goods including letters, parcels, live animals, household & office furniture, intermodal containers, bulk cargo etc"
+  },
+  {
+    "SACCode": 996513,
+    "SACDescription": "Transport services of petroleum & natural gas, water, sewerage and other goods via pipeline"
+  },
+  {
+    "SACCode": 996519,
+    "SACDescription": "Other land transport services of goods n.e.c."
+  },
+  {
+    "SACCode": 996521,
+    "SACDescription": "Coastal and transoceanic (overseas) water transport services of goods by refrigerator vessels, tankers, bulk cargo vessels, container ships etc"
+  },
+  {
+    "SACCode": 996522,
+    "SACDescription": "Inland water transport services of goods by refrigerator vessels, tankers and other vessels."
+  },
+  {
+    "SACCode": 996531,
+    "SACDescription": "Air transport services of letters & parcels and other goods"
+  },
+  {
+    "SACCode": 996532,
+    "SACDescription": "Space transport services of freight"
+  },
+  {
+    "SACCode": 9966,
+    "SACDescription": "Rental services of transport vehicles with or without operators"
+  },
+  {
+    "SACCode": 996601,
+    "SACDescription": "Rental services of road vehicles including buses, coaches, cars, trucks and other motor vehicles, with or without operator"
+  },
+  {
+    "SACCode": 996602,
+    "SACDescription": "Rental services of water vessels including passenger vessels, freight vessels etc with or without operator"
+  },
+  {
+    "SACCode": 996603,
+    "SACDescription": "Rental services of aircraft including passenger aircrafts, freight aircrafts etc with or without operator"
+  },
+  {
+    "SACCode": 996609,
+    "SACDescription": "Rental services of other transport vehicles n.e.c. with or without operator"
+  },
+  {
+    "SACCode": 9967,
+    "SACDescription": "Supporting services in transport"
+  },
+  {
+    "SACCode": 996711,
+    "SACDescription": "Container handling services"
+  },
+  {
+    "SACCode": 996712,
+    "SACDescription": "Customs House Agent services"
+  },
+  {
+    "SACCode": 996713,
+    "SACDescription": "Clearing and forwarding services"
+  },
+  {
+    "SACCode": 996719,
+    "SACDescription": "Other cargo and baggage handling services"
+  },
+  {
+    "SACCode": 996721,
+    "SACDescription": "Refrigerated storage services"
+  },
+  {
+    "SACCode": 996722,
+    "SACDescription": "Bulk liquid or gas storage services"
+  },
+  {
+    "SACCode": 996729,
+    "SACDescription": "Other storage and warehousing services"
+  },
+  {
+    "SACCode": 996731,
+    "SACDescription": "Railway pushing or towing services"
+  },
+  {
+    "SACCode": 996739,
+    "SACDescription": "Other supporting services for railway transport n.e.c."
+  },
+  {
+    "SACCode": 996741,
+    "SACDescription": "Bus station services"
+  },
+  {
+    "SACCode": 996742,
+    "SACDescription": "Operation services of National Highways, State Highways, Expressways, Roads & streets; bridges and tunnel operation services."
+  },
+  {
+    "SACCode": 996743,
+    "SACDescription": "Parking lot services"
+  },
+  {
+    "SACCode": 996744,
+    "SACDescription": "Towing services for commercial and private vehicles"
+  },
+  {
+    "SACCode": 996749,
+    "SACDescription": "Other supporting services for road transport n.e.c."
+  },
+  {
+    "SACCode": 996751,
+    "SACDescription": "Port and waterway operation services (excl. cargo handling) such as operation services of ports, docks, light houses, light ships etc"
+  },
+  {
+    "SACCode": 996752,
+    "SACDescription": "Pilotage and berthing services"
+  },
+  {
+    "SACCode": 996753,
+    "SACDescription": "Vessel salvage and refloating services"
+  },
+  {
+    "SACCode": 996759,
+    "SACDescription": "Other supporting services for water transport n.e.c."
+  },
+  {
+    "SACCode": 996761,
+    "SACDescription": "Airport operation services (excl. cargo handling)"
+  },
+  {
+    "SACCode": 996762,
+    "SACDescription": "Air traffic control services"
+  },
+  {
+    "SACCode": 996763,
+    "SACDescription": "Other supporting services for air transport"
+  },
+  {
+    "SACCode": 996764,
+    "SACDescription": "Supporting services for space transport"
+  },
+  {
+    "SACCode": 996791,
+    "SACDescription": "Goods transport agency services for road transport"
+  },
+  {
+    "SACCode": 996792,
+    "SACDescription": "Goods transport agency services for other modes of transport"
+  },
+  {
+    "SACCode": 996793,
+    "SACDescription": "Other goods transport services "
+  },
+  {
+    "SACCode": 996799,
+    "SACDescription": "Other supporting transport services n.e.c"
+  },
+  {
+    "SACCode": 9968,
+    "SACDescription": "Postal and courier services"
+  },
+  {
+    "SACCode": 996811,
+    "SACDescription": "Postal services including post office counter services, mail box rental services."
+  },
+  {
+    "SACCode": 996812,
+    "SACDescription": "Courier services"
+  },
+  {
+    "SACCode": 996813,
+    "SACDescription": "Local delivery services"
+  },
+  {
+    "SACCode": 996819,
+    "SACDescription": "Other Delivery Services n.e.c"
+  },
+  {
+    "SACCode": 9969,
+    "SACDescription": "Electricity, gas, water and other distribution services"
+  },
+  {
+    "SACCode": 996911,
+    "SACDescription": "Electricity transmission services"
+  },
+  {
+    "SACCode": 996912,
+    "SACDescription": "Electricity distribution services"
+  },
+  {
+    "SACCode": 996913,
+    "SACDescription": "Gas distribution services"
+  },
+  {
+    "SACCode": 996921,
+    "SACDescription": "Water distribution services"
+  },
+  {
+    "SACCode": 996922,
+    "SACDescription": "Services involving distribution of steam, hot water and air conditioning supply etc."
+  },
+  {
+    "SACCode": 996929,
+    "SACDescription": "Other similar services."
+  },
+  {
+    "SACCode": 9971,
+    "SACDescription": "Financial and related services"
+  },
+  {
+    "SACCode": 997111,
+    "SACDescription": "Central banking services"
+  },
+  {
+    "SACCode": 997112,
+    "SACDescription": "Deposit services"
+  },
+  {
+    "SACCode": 997113,
+    "SACDescription": "Credit-granting services including stand-by commitment, guarantees & securities"
+  },
+  {
+    "SACCode": 997114,
+    "SACDescription": "Financial leasing services"
+  },
+  {
+    "SACCode": 997119,
+    "SACDescription": "Other financial services (except investment banking, insurance services and pension services)"
+  },
+  {
+    "SACCode": 997120,
+    "SACDescription": "Investment banking services "
+  },
+  {
+    "SACCode": 997131,
+    "SACDescription": "pension services"
+  },
+  {
+    "SACCode": 997132,
+    "SACDescription": "Life insurance services  (excluding reinsurance services)"
+  },
+  {
+    "SACCode": 997133,
+    "SACDescription": "Accident and health insurance services"
+  },
+  {
+    "SACCode": 997134,
+    "SACDescription": "Motor vehicle insurance services"
+  },
+  {
+    "SACCode": 997135,
+    "SACDescription": "Marine, aviation, and other transport insurance services"
+  },
+  {
+    "SACCode": 997136,
+    "SACDescription": "Freight insurance services & Travel insurance services"
+  },
+  {
+    "SACCode": 997137,
+    "SACDescription": "Other property insurance services"
+  },
+  {
+    "SACCode": 997139,
+    "SACDescription": "Other non-life insurance services (excluding reinsurance services)"
+  },
+  {
+    "SACCode": 997141,
+    "SACDescription": "Life reinsurance services"
+  },
+  {
+    "SACCode": 997142,
+    "SACDescription": "Accident and health reinsurance services"
+  },
+  {
+    "SACCode": 997143,
+    "SACDescription": "Motor vehicle reinsurance services"
+  },
+  {
+    "SACCode": 997144,
+    "SACDescription": "Marine, aviation and other transport reinsurance ser"
+  },
+  {
+    "SACCode": 997145,
+    "SACDescription": "services"
+  },
+  {
+    "SACCode": 997146,
+    "SACDescription": "Freight reinsurance services"
+  },
+  {
+    "SACCode": 997147,
+    "SACDescription": "Other property reinsurance services"
+  },
+  {
+    "SACCode": 997149,
+    "SACDescription": "Other non-life reinsurance services "
+  },
+  {
+    "SACCode": 997151,
+    "SACDescription": "Services related to investment banking such as mergers & acquisition services, corporate finance & venture capital services"
+  },
+  {
+    "SACCode": 997152,
+    "SACDescription": "Brokerage and related securities and commodities services including commodity exchange services"
+  },
+  {
+    "SACCode": 997153,
+    "SACDescription": "Portfolio management services except pension funds"
+  },
+  {
+    "SACCode": 997154,
+    "SACDescription": "Trust and custody services"
+  },
+  {
+    "SACCode": 997155,
+    "SACDescription": "Services related to the administration of financial markets"
+  },
+  {
+    "SACCode": 997156,
+    "SACDescription": "Financial consultancy services"
+  },
+  {
+    "SACCode": 997157,
+    "SACDescription": "Foreign exchange services"
+  },
+  {
+    "SACCode": 997158,
+    "SACDescription": "Financial transacions processing and clearing house services"
+  },
+  {
+    "SACCode": 997159,
+    "SACDescription": "Other services auxiliary to financial services"
+  },
+  {
+    "SACCode": 997161,
+    "SACDescription": "Insurance brokerage and agency services"
+  },
+  {
+    "SACCode": 997162,
+    "SACDescription": "Insurance claims adjustment services"
+  },
+  {
+    "SACCode": 997163,
+    "SACDescription": "Actuarial services"
+  },
+  {
+    "SACCode": 997164,
+    "SACDescription": "Pension fund management services"
+  },
+  {
+    "SACCode": 997169,
+    "SACDescription": "Other services auxiliary to insurance and pensions "
+  },
+  {
+    "SACCode": 997171,
+    "SACDescription": "Services of holding equity of subsidiary companies"
+  },
+  {
+    "SACCode": 997172,
+    "SACDescription": "Services of holding securities and other assets of trusts and funds and similar financial entities"
+  },
+  {
+    "SACCode": 9972,
+    "SACDescription": "Real estate services"
+  },
+  {
+    "SACCode": 997211,
+    "SACDescription": "Rental or leasing services involving own or leased residential property"
+  },
+  {
+    "SACCode": 997212,
+    "SACDescription": "Rental or leasing services involving own or leased non-residential property"
+  },
+  {
+    "SACCode": 997213,
+    "SACDescription": "Trade services of buildings"
+  },
+  {
+    "SACCode": 997214,
+    "SACDescription": "Trade services of time-share properties"
+  },
+  {
+    "SACCode": 997215,
+    "SACDescription": "Trade services of vacant and subdivided land"
+  },
+  {
+    "SACCode": 997221,
+    "SACDescription": "Property management services on a fee/commission basis or contract basis"
+  },
+  {
+    "SACCode": 997222,
+    "SACDescription": "Building sales on a fee/commission basis or contract basis"
+  },
+  {
+    "SACCode": 997223,
+    "SACDescription": "Land sales on a fee/commission basis or contract basis"
+  },
+  {
+    "SACCode": 997224,
+    "SACDescription": "Real estate appraisal services on a fee/commission basis or contract basis"
+  },
+  {
+    "SACCode": 9973,
+    "SACDescription": "Leasing or rental services with or without operator"
+  },
+  {
+    "SACCode": 997311,
+    "SACDescription": "Leasing or rental services concerning transport equipments including containers, with or without operator"
+  },
+  {
+    "SACCode": 997312,
+    "SACDescription": "Leasing or rental services concerning agricultural machinery and equipment with or without operator"
+  },
+  {
+    "SACCode": 997313,
+    "SACDescription": "Leasing or rental services concerning construction machinery and equipment with or without operator"
+  },
+  {
+    "SACCode": 997314,
+    "SACDescription": "Leasing or rental services concerning office machinery and equipment (except computers) with or without operator"
+  },
+  {
+    "SACCode": 997315,
+    "SACDescription": "Leasing or rental services concerning computers with or without operators"
+  },
+  {
+    "SACCode": 997316,
+    "SACDescription": "Leasing or rental services concerning telecommunications equipment with or without operator"
+  },
+  {
+    "SACCode": 997319,
+    "SACDescription": "Leasing or rental services concerning other machinery and equipments with or without operator"
+  },
+  {
+    "SACCode": 997321,
+    "SACDescription": "Leasing or rental services concerning televisions, radios, video cassette recorders, projectors, audio systems and related equipment and accessories (Home entertainment equipment )"
+  },
+  {
+    "SACCode": 997322,
+    "SACDescription": "Leasing or rental services concerning video tapes and disks (Home entertainment equipment )"
+  },
+  {
+    "SACCode": 997323,
+    "SACDescription": "Leasing or rental services concerning furniture and other household appliances"
+  },
+  {
+    "SACCode": 997324,
+    "SACDescription": "Leasing or rental services concerning pleasure and leisure equipment."
+  },
+  {
+    "SACCode": 997325,
+    "SACDescription": "Leasing or rental services concerning household linen."
+  },
+  {
+    "SACCode": 997326,
+    "SACDescription": "Leasing or rental services concerning textiles, clothing and footwear."
+  },
+  {
+    "SACCode": 997327,
+    "SACDescription": "Leasing or rental services concerning do-it-yourself machinery and equipment"
+  },
+  {
+    "SACCode": 997329,
+    "SACDescription": "Leasing or rental services concerning other goods"
+  },
+  {
+    "SACCode": 997331,
+    "SACDescription": "Licensing services for the right to use computer software and databases."
+  },
+  {
+    "SACCode": 997332,
+    "SACDescription": "Licensing services for the right to broadcast and show original films, sound recordings, radio and television programme etc."
+  },
+  {
+    "SACCode": 997333,
+    "SACDescription": "Licensing services for the right to reproduce original art works"
+  },
+  {
+    "SACCode": 997334,
+    "SACDescription": "Licensing services for the right to reprint and copy manuscripts, books, journals and periodicals."
+  },
+  {
+    "SACCode": 997335,
+    "SACDescription": "Licensing services for the right to use R&D products"
+  },
+  {
+    "SACCode": 997336,
+    "SACDescription": "Licensing services for the right to use trademarks and franchises"
+  },
+  {
+    "SACCode": 997337,
+    "SACDescription": "Licensing services for the right to use minerals including its exploration and evaluation"
+  },
+  {
+    "SACCode": 997338,
+    "SACDescription": "Licensing services for right to use other natural resources including telecommunication spectrum"
+  },
+  {
+    "SACCode": 997339,
+    "SACDescription": "Licensing services for the right to use other intellectual property products and other rescources n.e.c"
+  },
+  {
+    "SACCode": 9981,
+    "SACDescription": "Research and development services"
+  },
+  {
+    "SACCode": 998111,
+    "SACDescription": "Research and experimental development services in natural sciences"
+  },
+  {
+    "SACCode": 998112,
+    "SACDescription": "Research and experimental development services in engineering and technology"
+  },
+  {
+    "SACCode": 998113,
+    "SACDescription": "Research and experimental development services in medical sciences and pharmacy."
+  },
+  {
+    "SACCode": 998114,
+    "SACDescription": "Research and experimental development services in agricultural sciences."
+  },
+  {
+    "SACCode": 998121,
+    "SACDescription": "Research and experimental development services in social sciences."
+  },
+  {
+    "SACCode": 998122,
+    "SACDescription": "Research and experimental development services in humanities"
+  },
+  {
+    "SACCode": 998130,
+    "SACDescription": "Interdisciplinary research and experimental development services."
+  },
+  {
+    "SACCode": 998141,
+    "SACDescription": "Research and development originals in pharmaceuticals"
+  },
+  {
+    "SACCode": 998142,
+    "SACDescription": "Research and development originals in agriculture"
+  },
+  {
+    "SACCode": 998143,
+    "SACDescription": "Research and development originals in biotechnology"
+  },
+  {
+    "SACCode": 998144,
+    "SACDescription": "Research and development originals in computer related sciences"
+  },
+  {
+    "SACCode": 998145,
+    "SACDescription": "Research and development originals in other fields n.e.c."
+  },
+  {
+    "SACCode": 9982,
+    "SACDescription": "Legal and accounting services"
+  },
+  {
+    "SACCode": 998211,
+    "SACDescription": "Legal advisory and representation services concerning criminal law."
+  },
+  {
+    "SACCode": 998212,
+    "SACDescription": "Legal advisory and representation services concerning other fields of law."
+  },
+  {
+    "SACCode": 998213,
+    "SACDescription": "Legal documentation and certification services concerning patents, copyrights and other intellectual property rights."
+  },
+  {
+    "SACCode": 998214,
+    "SACDescription": "Legal documentation and certification services concerning other documents."
+  },
+  {
+    "SACCode": 998215,
+    "SACDescription": "Arbitration and conciliation services"
+  },
+  {
+    "SACCode": 998216,
+    "SACDescription": "Other legal services n.e.c."
+  },
+  {
+    "SACCode": 998221,
+    "SACDescription": "Financial auditing services"
+  },
+  {
+    "SACCode": 998222,
+    "SACDescription": "Accounting and bookkeeping services"
+  },
+  {
+    "SACCode": 998223,
+    "SACDescription": "Payroll services"
+  },
+  {
+    "SACCode": 998224,
+    "SACDescription": "Other similar services n.e.c"
+  },
+  {
+    "SACCode": 998231,
+    "SACDescription": "Corporate tax consulting and preparation services"
+  },
+  {
+    "SACCode": 998232,
+    "SACDescription": "Individual tax preparation and planning services"
+  },
+  {
+    "SACCode": 998240,
+    "SACDescription": "Insolvency and receivership services"
+  },
+  {
+    "SACCode": 9983,
+    "SACDescription": "Other professional, technical and business services"
+  },
+  {
+    "SACCode": 998311,
+    "SACDescription": "Management consulting and management services including financial, strategic, human resources, marketing, operations and supply chain management."
+  },
+  {
+    "SACCode": 998312,
+    "SACDescription": "Business consulting services including pubic relations services"
+  },
+  {
+    "SACCode": 998313,
+    "SACDescription": "Information technology (IT) consulting and support services"
+  },
+  {
+    "SACCode": 998314,
+    "SACDescription": "Information technology (IT) design and development services"
+  },
+  {
+    "SACCode": 998315,
+    "SACDescription": "Hosting and information technology (IT) infrastructure provisioning services"
+  },
+  {
+    "SACCode": 998316,
+    "SACDescription": "IT infrastructure and network management services"
+  },
+  {
+    "SACCode": 998319,
+    "SACDescription": "Other information technology services n.e.c"
+  },
+  {
+    "SACCode": 998321,
+    "SACDescription": "Architectural advisory services"
+  },
+  {
+    "SACCode": 998322,
+    "SACDescription": "Architectural services for residential building projects"
+  },
+  {
+    "SACCode": 998323,
+    "SACDescription": "Architectural services for non-residential building projects"
+  },
+  {
+    "SACCode": 998324,
+    "SACDescription": "Historical restoration architectural services"
+  },
+  {
+    "SACCode": 998325,
+    "SACDescription": "Urban planning services"
+  },
+  {
+    "SACCode": 998326,
+    "SACDescription": "Rural land planning services"
+  },
+  {
+    "SACCode": 998327,
+    "SACDescription": "Project site master planning services"
+  },
+  {
+    "SACCode": 998328,
+    "SACDescription": "Landscape architectural services and advisory services"
+  },
+  {
+    "SACCode": 998331,
+    "SACDescription": "Engineering advisory services"
+  },
+  {
+    "SACCode": 998332,
+    "SACDescription": "Engineering services for building projects"
+  },
+  {
+    "SACCode": 998333,
+    "SACDescription": "Engineering services for industrial and manufacturing projects"
+  },
+  {
+    "SACCode": 998334,
+    "SACDescription": "Engineering services for transportation projects"
+  },
+  {
+    "SACCode": 998335,
+    "SACDescription": "Engineering services for power projects"
+  },
+  {
+    "SACCode": 998336,
+    "SACDescription": "Engineering services for telecommunications and broadcasting projects"
+  },
+  {
+    "SACCode": 998337,
+    "SACDescription": "Engineering services for waste management projects (hazardous and non-hazardous), for water, sewerage and drainage projects."
+  },
+  {
+    "SACCode": 998338,
+    "SACDescription": "Engineering services for other projects n.e.c."
+  },
+  {
+    "SACCode": 998339,
+    "SACDescription": "Project management services for construction projects"
+  },
+  {
+    "SACCode": 998341,
+    "SACDescription": "Geological and geophysical consulting services"
+  },
+  {
+    "SACCode": 998342,
+    "SACDescription": "Subsurface surveying services"
+  },
+  {
+    "SACCode": 998343,
+    "SACDescription": "Mineral exploration and evaluation"
+  },
+  {
+    "SACCode": 998344,
+    "SACDescription": "Surface surveying and map-making services"
+  },
+  {
+    "SACCode": 998345,
+    "SACDescription": "Weather forecasting and meteorological services"
+  },
+  {
+    "SACCode": 998346,
+    "SACDescription": "Technical testing and analysis services"
+  },
+  {
+    "SACCode": 998347,
+    "SACDescription": "Certification of ships, aircraft, dams, etc."
+  },
+  {
+    "SACCode": 998348,
+    "SACDescription": "Certification and authentication of works of art"
+  },
+  {
+    "SACCode": 998349,
+    "SACDescription": "Other technical and scientific services n.e.c."
+  },
+  {
+    "SACCode": 998351,
+    "SACDescription": "Veterinary services for pet animals"
+  },
+  {
+    "SACCode": 998352,
+    "SACDescription": "Veterinary services for livestock"
+  },
+  {
+    "SACCode": 998359,
+    "SACDescription": "Other veterinary services n.e.c."
+  },
+  {
+    "SACCode": 998361,
+    "SACDescription": "Advertising Services"
+  },
+  {
+    "SACCode": 998362,
+    "SACDescription": "Purchase or sale of advertising space or time, on commission"
+  },
+  {
+    "SACCode": 998363,
+    "SACDescription": "Sale of advertising space in print media (except on commission)"
+  },
+  {
+    "SACCode": 998364,
+    "SACDescription": "Sale of TV and radio advertising time"
+  },
+  {
+    "SACCode": 998365,
+    "SACDescription": "Sale of Internet advertising space"
+  },
+  {
+    "SACCode": 998366,
+    "SACDescription": "Sale of other advertising space or time (except on commission)"
+  },
+  {
+    "SACCode": 998371,
+    "SACDescription": "Market research services"
+  },
+  {
+    "SACCode": 998372,
+    "SACDescription": "Public opinion polling services"
+  },
+  {
+    "SACCode": 998381,
+    "SACDescription": "Portrait photography services"
+  },
+  {
+    "SACCode": 998382,
+    "SACDescription": "Advertising and related photography services"
+  },
+  {
+    "SACCode": 998383,
+    "SACDescription": "Event photography and event videography services"
+  },
+  {
+    "SACCode": 998384,
+    "SACDescription": "Specialty photography services"
+  },
+  {
+    "SACCode": 998385,
+    "SACDescription": "Restoration and retouching services of photography"
+  },
+  {
+    "SACCode": 998386,
+    "SACDescription": "Photographic & videographic processing services"
+  },
+  {
+    "SACCode": 998387,
+    "SACDescription": "Other Photography & Videography and their processing services n.e.c."
+  },
+  {
+    "SACCode": 998391,
+    "SACDescription": "Specialty design services including interior design, fashion design, industrial design and other specialty design services"
+  },
+  {
+    "SACCode": 998392,
+    "SACDescription": "Design originals"
+  },
+  {
+    "SACCode": 998393,
+    "SACDescription": "Scientific and technical consulting services"
+  },
+  {
+    "SACCode": 998394,
+    "SACDescription": "Original compilations of facts/information"
+  },
+  {
+    "SACCode": 998395,
+    "SACDescription": "Translation and interpretation services"
+  },
+  {
+    "SACCode": 998396,
+    "SACDescription": "Trademarks and franchises"
+  },
+  {
+    "SACCode": 998397,
+    "SACDescription": "Sponsorship Services & Brand Promotion Services"
+  },
+  {
+    "SACCode": 998399,
+    "SACDescription": "Other professional, technical and business services n.e.c."
+  },
+  {
+    "SACCode": 9984,
+    "SACDescription": "Telecommunications, broadcasting and information supply services"
+  },
+  {
+    "SACCode": 998411,
+    "SACDescription": "Carrier services"
+  },
+  {
+    "SACCode": 998412,
+    "SACDescription": "Fixed telephony services"
+  },
+  {
+    "SACCode": 998413,
+    "SACDescription": "Mobile telecommunications services"
+  },
+  {
+    "SACCode": 998414,
+    "SACDescription": "Private network services"
+  },
+  {
+    "SACCode": 998415,
+    "SACDescription": "Data transmission services"
+  },
+  {
+    "SACCode": 998419,
+    "SACDescription": "Other telecommunications services including Fax services, Telex services n.e.c."
+  },
+  {
+    "SACCode": 998421,
+    "SACDescription": "Internet backbone services"
+  },
+  {
+    "SACCode": 998422,
+    "SACDescription": "Internet access services in wired and wireless mode."
+  },
+  {
+    "SACCode": 998423,
+    "SACDescription": "Fax, telephony over the Internet"
+  },
+  {
+    "SACCode": 998424,
+    "SACDescription": "Audio conferencing and video conferencing over the Internet"
+  },
+  {
+    "SACCode": 998429,
+    "SACDescription": "Other Internet telecommunications services n.e.c."
+  },
+  {
+    "SACCode": 998431,
+    "SACDescription": "On-line text based information such as online books, newpapers, periodicals, directories etc"
+  },
+  {
+    "SACCode": 998432,
+    "SACDescription": "On-line audio content"
+  },
+  {
+    "SACCode": 998433,
+    "SACDescription": "On-line video content"
+  },
+  {
+    "SACCode": 998434,
+    "SACDescription": "Software downloads"
+  },
+  {
+    "SACCode": 998439,
+    "SACDescription": "Other on-line contents n.e.c."
+  },
+  {
+    "SACCode": 998441,
+    "SACDescription": "News agency services to newspapers and periodicals"
+  },
+  {
+    "SACCode": 998442,
+    "SACDescription": "Services of independent journalists and press photographers"
+  },
+  {
+    "SACCode": 998443,
+    "SACDescription": "News agency services to audiovisual media"
+  },
+  {
+    "SACCode": 998451,
+    "SACDescription": "Library services"
+  },
+  {
+    "SACCode": 998452,
+    "SACDescription": "Operation services of public archives including digital archives"
+  },
+  {
+    "SACCode": 998453,
+    "SACDescription": "Operation services of historical archives including digital archives"
+  },
+  {
+    "SACCode": 998461,
+    "SACDescription": "Radio broadcast originals"
+  },
+  {
+    "SACCode": 998462,
+    "SACDescription": "Television broadcast originals"
+  },
+  {
+    "SACCode": 998463,
+    "SACDescription": "Radio channel programmes"
+  },
+  {
+    "SACCode": 998464,
+    "SACDescription": "Television channel programmes"
+  },
+  {
+    "SACCode": 998465,
+    "SACDescription": "Broadcasting services"
+  },
+  {
+    "SACCode": 998466,
+    "SACDescription": "Home programme distribution services"
+  },
+  {
+    "SACCode": 9985,
+    "SACDescription": "Support services"
+  },
+  {
+    "SACCode": 998511,
+    "SACDescription": "Executive/retained personnel search services"
+  },
+  {
+    "SACCode": 998512,
+    "SACDescription": "Permanent placement services, other than executive search services"
+  },
+  {
+    "SACCode": 998513,
+    "SACDescription": "Contract staffing services"
+  },
+  {
+    "SACCode": 998514,
+    "SACDescription": "Temporary staffing services"
+  },
+  {
+    "SACCode": 998515,
+    "SACDescription": "Long-term staffing (pay rolling) services"
+  },
+  {
+    "SACCode": 998516,
+    "SACDescription": "Temporary staffing-to-permanent placement services"
+  },
+  {
+    "SACCode": 998517,
+    "SACDescription": "Co-employment staffing services"
+  },
+  {
+    "SACCode": 998519,
+    "SACDescription": "Other employment & labour supply services n.e.c"
+  },
+  {
+    "SACCode": 998521,
+    "SACDescription": "Investigation services"
+  },
+  {
+    "SACCode": 998522,
+    "SACDescription": "Security consulting services"
+  },
+  {
+    "SACCode": 998523,
+    "SACDescription": "Security systems services"
+  },
+  {
+    "SACCode": 998524,
+    "SACDescription": "Armoured car services"
+  },
+  {
+    "SACCode": 998525,
+    "SACDescription": "Guard services"
+  },
+  {
+    "SACCode": 998526,
+    "SACDescription": "Training of guard dogs"
+  },
+  {
+    "SACCode": 998527,
+    "SACDescription": "Polygraph services"
+  },
+  {
+    "SACCode": 998528,
+    "SACDescription": "Fingerprinting services"
+  },
+  {
+    "SACCode": 998529,
+    "SACDescription": "Other security services n.e.c."
+  },
+  {
+    "SACCode": 998531,
+    "SACDescription": "Disinfecting and exterminating services"
+  },
+  {
+    "SACCode": 998532,
+    "SACDescription": "Window cleaning services"
+  },
+  {
+    "SACCode": 998533,
+    "SACDescription": "General cleaning services"
+  },
+  {
+    "SACCode": 998534,
+    "SACDescription": "Specialized cleaning services for reservoirs and tanks"
+  },
+  {
+    "SACCode": 998535,
+    "SACDescription": "Sterilization of objects or premises (operating rooms)"
+  },
+  {
+    "SACCode": 998536,
+    "SACDescription": "Furnace and chimney cleaning services"
+  },
+  {
+    "SACCode": 998537,
+    "SACDescription": "Exterior cleaning of buildings of all types"
+  },
+  {
+    "SACCode": 998538,
+    "SACDescription": "Cleaning of transportation equipment"
+  },
+  {
+    "SACCode": 998539,
+    "SACDescription": "Other cleaning services n.e.c."
+  },
+  {
+    "SACCode": 998540,
+    "SACDescription": "Packaging services of goods for others"
+  },
+  {
+    "SACCode": 998541,
+    "SACDescription": "Parcel packing and gift wrapping"
+  },
+  {
+    "SACCode": 998542,
+    "SACDescription": "Coin and currency packing services"
+  },
+  {
+    "SACCode": 998549,
+    "SACDescription": "Other packaging services n.e.c"
+  },
+  {
+    "SACCode": 998551,
+    "SACDescription": "Reservation services for transportation"
+  },
+  {
+    "SACCode": 998552,
+    "SACDescription": "Reservation services for accommodation, cruises and package tours"
+  },
+  {
+    "SACCode": 998553,
+    "SACDescription": "Reservation services for convention centres, congress centres and exhibition halls"
+  },
+  {
+    "SACCode": 998554,
+    "SACDescription": "Reservation services for event tickets, cinema halls, entertainment and recreational services and other reservation services"
+  },
+  {
+    "SACCode": 998555,
+    "SACDescription": "Tour operator services"
+  },
+  {
+    "SACCode": 998556,
+    "SACDescription": "Tourist guide services"
+  },
+  {
+    "SACCode": 998557,
+    "SACDescription": "Tourism promotion and visitor information services"
+  },
+  {
+    "SACCode": 998559,
+    "SACDescription": "Other travel arrangement and related services n.e.c"
+  },
+  {
+    "SACCode": 998591,
+    "SACDescription": "Credit reporting & rating services"
+  },
+  {
+    "SACCode": 998592,
+    "SACDescription": "Collection agency services"
+  },
+  {
+    "SACCode": 998593,
+    "SACDescription": "Telephone-based support services"
+  },
+  {
+    "SACCode": 998594,
+    "SACDescription": "Combined office administrative services"
+  },
+  {
+    "SACCode": 998595,
+    "SACDescription": "Specialized office support services such as duplicating services, mailing services, document preparation etc"
+  },
+  {
+    "SACCode": 998596,
+    "SACDescription": "Events, Exhibitions, Conventions and trade shows organisation and assistance services"
+  },
+  {
+    "SACCode": 998597,
+    "SACDescription": "Landscape care and maintenance services"
+  },
+  {
+    "SACCode": 998598,
+    "SACDescription": "Other information services n.e.c."
+  },
+  {
+    "SACCode": 998599,
+    "SACDescription": "Other support services n.e.c."
+  },
+  {
+    "SACCode": 9986,
+    "SACDescription": "Support services to agriculture, hunting, forestry, fishing, mining and utilities"
+  },
+  {
+    "SACCode": 998611,
+    "SACDescription": "Support services to crop production"
+  },
+  {
+    "SACCode": 998612,
+    "SACDescription": "Animal husbandry services"
+  },
+  {
+    "SACCode": 998613,
+    "SACDescription": "Support services to hunting"
+  },
+  {
+    "SACCode": 998614,
+    "SACDescription": "Support services to forestry and logging"
+  },
+  {
+    "SACCode": 998615,
+    "SACDescription": "Support services to fishing"
+  },
+  {
+    "SACCode": 998619,
+    "SACDescription": "Other support services to agriculture, hunting, forestry and fishing"
+  },
+  {
+    "SACCode": 998621,
+    "SACDescription": "Support services to oil and gas extraction"
+  },
+  {
+    "SACCode": 998622,
+    "SACDescription": "Support services to other mining n.e.c."
+  },
+  {
+    "SACCode": 998631,
+    "SACDescription": "Support services to electricity transmission and distribution"
+  },
+  {
+    "SACCode": 998632,
+    "SACDescription": "Support services to gas distribution"
+  },
+  {
+    "SACCode": 998633,
+    "SACDescription": "Support services to water distribution"
+  },
+  {
+    "SACCode": 998634,
+    "SACDescription": "Support services to Distribution services of steam, hot water and air-conditioning supply"
+  },
+  {
+    "SACCode": 9987,
+    "SACDescription": "Maintenance, repair and installation (except construction) services"
+  },
+  {
+    "SACCode": 998711,
+    "SACDescription": "Maintenance and repair services of fabricated metal products, except machinery and equipment."
+  },
+  {
+    "SACCode": 998712,
+    "SACDescription": "Maintenance and repair services of office and accounting machinery"
+  },
+  {
+    "SACCode": 998713,
+    "SACDescription": "Maintenance and repair services of computers and peripheral equipment"
+  },
+  {
+    "SACCode": 998714,
+    "SACDescription": "Maintenance and repair services of transport machinery and equipment"
+  },
+  {
+    "SACCode": 998715,
+    "SACDescription": "Maintenance and repair services of electrical household appliances"
+  },
+  {
+    "SACCode": 998716,
+    "SACDescription": "Maintenance and repair services of telecommunication equipments and apparatus"
+  },
+  {
+    "SACCode": 998717,
+    "SACDescription": "Maintenance and repair services of commercial and industrial machinery."
+  },
+  {
+    "SACCode": 998718,
+    "SACDescription": "Maintenance and repair services of elevators and escalators"
+  },
+  {
+    "SACCode": 998719,
+    "SACDescription": "Maintenance and repair services of other machinery and equipments"
+  },
+  {
+    "SACCode": 998721,
+    "SACDescription": "Repair services of footwear and leather goods"
+  },
+  {
+    "SACCode": 998722,
+    "SACDescription": "Repair services of watches, clocks and jewellery"
+  },
+  {
+    "SACCode": 998723,
+    "SACDescription": "Repair services of garments and household textiles"
+  },
+  {
+    "SACCode": 998724,
+    "SACDescription": "Repair services of furniture"
+  },
+  {
+    "SACCode": 998725,
+    "SACDescription": "Repair services of bicycles"
+  },
+  {
+    "SACCode": 998726,
+    "SACDescription": "Maintenance and repair services of musical instruments"
+  },
+  {
+    "SACCode": 998727,
+    "SACDescription": "Repair services for photographic equipment and cameras"
+  },
+  {
+    "SACCode": 998729,
+    "SACDescription": "Maintenance and repair services of other goods n.e.c."
+  },
+  {
+    "SACCode": 998731,
+    "SACDescription": "Installation services of fabricated metal products, except machinery and equipment."
+  },
+  {
+    "SACCode": 998732,
+    "SACDescription": "Installation services of industrial, manufacturing and service industry machinery and equipment."
+  },
+  {
+    "SACCode": 998733,
+    "SACDescription": "Installation services of office and accounting machinery and computers"
+  },
+  {
+    "SACCode": 998734,
+    "SACDescription": "Installation services of radio, television and communications equipment and apparatus."
+  },
+  {
+    "SACCode": 998735,
+    "SACDescription": "Installation services of professional medical machinery and equipment, and precision and optical instruments."
+  },
+  {
+    "SACCode": 998736,
+    "SACDescription": "Installation services of electrical machinery and apparatus n.e.c."
+  },
+  {
+    "SACCode": 998739,
+    "SACDescription": "Installation services of other goods n.e.c."
+  },
+  {
+    "SACCode": 9988,
+    "SACDescription": "Manufacturing services on physical inputs (goods) owned by others"
+  },
+  {
+    "SACCode": 998811,
+    "SACDescription": "Meat processing services"
+  },
+  {
+    "SACCode": 998812,
+    "SACDescription": "Fish processing services"
+  },
+  {
+    "SACCode": 998813,
+    "SACDescription": "Fruit and vegetables processing services"
+  },
+  {
+    "SACCode": 998814,
+    "SACDescription": "Vegetable and animal oil and fat manufacturing services"
+  },
+  {
+    "SACCode": 998815,
+    "SACDescription": "Dairy product manufacturing services"
+  },
+  {
+    "SACCode": 998816,
+    "SACDescription": "Other food product manufacturing services"
+  },
+  {
+    "SACCode": 998817,
+    "SACDescription": "Prepared animal feeds manufacturing services"
+  },
+  {
+    "SACCode": 998818,
+    "SACDescription": "Beverage manufacturing services"
+  },
+  {
+    "SACCode": 998819,
+    "SACDescription": "Tobacco manufacturing services n.e.c."
+  },
+  {
+    "SACCode": 998821,
+    "SACDescription": "Textile manufacturing services"
+  },
+  {
+    "SACCode": 998822,
+    "SACDescription": "Wearing apparel manufacturing services"
+  },
+  {
+    "SACCode": 998823,
+    "SACDescription": "Leather and leather product manufacturing services"
+  },
+  {
+    "SACCode": 998831,
+    "SACDescription": "Wood and wood product manufacturing services"
+  },
+  {
+    "SACCode": 998832,
+    "SACDescription": "Paper and paper product manufacturing services"
+  },
+  {
+    "SACCode": 998841,
+    "SACDescription": "Coke and refined petroleum product manufacturing services"
+  },
+  {
+    "SACCode": 998842,
+    "SACDescription": "Chemical product manufacturing services"
+  },
+  {
+    "SACCode": 998843,
+    "SACDescription": "Pharmaceutical product manufacturing services"
+  },
+  {
+    "SACCode": 998851,
+    "SACDescription": "Rubber and plastic product manufacturing services"
+  },
+  {
+    "SACCode": 998852,
+    "SACDescription": "Plastic product manufacturing services"
+  },
+  {
+    "SACCode": 998853,
+    "SACDescription": "Other non-metallic mineral product manufacturing services"
+  },
+  {
+    "SACCode": 998860,
+    "SACDescription": "Basic metal manufacturing services"
+  },
+  {
+    "SACCode": 998871,
+    "SACDescription": "Structural metal product, tank, reservoir and steam generator manufacturing services"
+  },
+  {
+    "SACCode": 998872,
+    "SACDescription": "Weapon and ammunition manufacturing services"
+  },
+  {
+    "SACCode": 998873,
+    "SACDescription": "Other fabricated metal product manufacturing and metal treatment services"
+  },
+  {
+    "SACCode": 998874,
+    "SACDescription": "Computer, electronic and optical product manufacturing services"
+  },
+  {
+    "SACCode": 998875,
+    "SACDescription": "Electrical equipment manufacturing services"
+  },
+  {
+    "SACCode": 998876,
+    "SACDescription": "General-purpose machinery manufacturing services n.e.c."
+  },
+  {
+    "SACCode": 998877,
+    "SACDescription": "Special-purpose machinery manufacturing services"
+  },
+  {
+    "SACCode": 998881,
+    "SACDescription": "Motor vehicle and trailer manufacturing services"
+  },
+  {
+    "SACCode": 998882,
+    "SACDescription": "Other transport equipment manufacturing services"
+  },
+  {
+    "SACCode": 998891,
+    "SACDescription": "Furniture manufacturing services"
+  },
+  {
+    "SACCode": 998892,
+    "SACDescription": "Jewellery manufacturing services"
+  },
+  {
+    "SACCode": 998893,
+    "SACDescription": "Imitation jewellery manufacturing services"
+  },
+  {
+    "SACCode": 998894,
+    "SACDescription": "Musical instrument manufacturing services"
+  },
+  {
+    "SACCode": 998895,
+    "SACDescription": "Sports goods manufacturing services"
+  },
+  {
+    "SACCode": 998896,
+    "SACDescription": "Game and toy manufacturing services"
+  },
+  {
+    "SACCode": 998897,
+    "SACDescription": "Medical and dental instrument and supply manufacturing services"
+  },
+  {
+    "SACCode": 998898,
+    "SACDescription": "Other manufacturing services n.e.c."
+  },
+  {
+    "SACCode": 9989,
+    "SACDescription": "Other manufacturing services; publishing, printing and reproduction services; materials recovery services"
+  },
+  {
+    "SACCode": 998911,
+    "SACDescription": "Publishing, on a fee or contract basis"
+  },
+  {
+    "SACCode": 998912,
+    "SACDescription": "Printing and reproduction services of recorded media, on a fee or contract basis"
+  },
+  {
+    "SACCode": 998920,
+    "SACDescription": "Moulding, pressing, stamping, extruding and similar plastic manufacturing services"
+  },
+  {
+    "SACCode": 998931,
+    "SACDescription": "Iron and steel casting services"
+  },
+  {
+    "SACCode": 998932,
+    "SACDescription": "Non-ferrous metal casting services"
+  },
+  {
+    "SACCode": 998933,
+    "SACDescription": "Metal forging, pressing, stamping, roll forming and powder metallurgy services"
+  },
+  {
+    "SACCode": 998941,
+    "SACDescription": "Metal waste and scrap recovery (recycling) services, on a fee or contract basis"
+  },
+  {
+    "SACCode": 998942,
+    "SACDescription": "Non-metal waste and scrap recovery (recycling) services, on a fee or contract basis"
+  },
+  {
+    "SACCode": 9991,
+    "SACDescription": "Public administration and other services provided to the community as a whole; compulsory social security services"
+  },
+  {
+    "SACCode": 999111,
+    "SACDescription": "Overall Government public services"
+  },
+  {
+    "SACCode": 999112,
+    "SACDescription": "Public administrative services related to the provision of educational, health care, cultural and other social services, excluding social security service."
+  },
+  {
+    "SACCode": 999113,
+    "SACDescription": "Public administrative services related to the more efficient operation of business."
+  },
+  {
+    "SACCode": 999119,
+    "SACDescription": "Other administrative services of the government n.e.c."
+  },
+  {
+    "SACCode": 999121,
+    "SACDescription": "Public administrative services related to external affairs, diplomatic and consular services abroad."
+  },
+  {
+    "SACCode": 999122,
+    "SACDescription": "Services related to foreign economic aid"
+  },
+  {
+    "SACCode": 999123,
+    "SACDescription": "Services related to foreign military aid"
+  },
+  {
+    "SACCode": 999124,
+    "SACDescription": "Military defence services"
+  },
+  {
+    "SACCode": 999125,
+    "SACDescription": "Civil defence services"
+  },
+  {
+    "SACCode": 999126,
+    "SACDescription": "Police and fire protection services"
+  },
+  {
+    "SACCode": 999127,
+    "SACDescription": "Public administrative services related to law courts"
+  },
+  {
+    "SACCode": 999128,
+    "SACDescription": "Administrative services related to the detention or rehabilitation of criminals."
+  },
+  {
+    "SACCode": 999129,
+    "SACDescription": "Public administrative services related to other public order and safety affairs n.e.c."
+  },
+  {
+    "SACCode": 999131,
+    "SACDescription": "Administrative services related to sickness, maternity or temporary disablement benefit schemes."
+  },
+  {
+    "SACCode": 999132,
+    "SACDescription": "Administrative services related to government employee pension schemes; old-age disability or survivors benefit schemes, other than for government employees"
+  },
+  {
+    "SACCode": 999133,
+    "SACDescription": "Administrative services related to unemployment compensation benefit schemes"
+  },
+  {
+    "SACCode": 999134,
+    "SACDescription": "Administrative services related to family and child allowance programmes"
+  },
+  {
+    "SACCode": 9992,
+    "SACDescription": "Education services"
+  },
+  {
+    "SACCode": 999210,
+    "SACDescription": "Pre-primary education services"
+  },
+  {
+    "SACCode": 999220,
+    "SACDescription": "Primary education services"
+  },
+  {
+    "SACCode": 999231,
+    "SACDescription": "Secondary education services, general"
+  },
+  {
+    "SACCode": 999232,
+    "SACDescription": "Secondary education services, technical and vocational."
+  },
+  {
+    "SACCode": 999241,
+    "SACDescription": "Higher education services, general"
+  },
+  {
+    "SACCode": 999242,
+    "SACDescription": "Higher education services, technical"
+  },
+  {
+    "SACCode": 999243,
+    "SACDescription": "Higher education services, vocational"
+  },
+  {
+    "SACCode": 999249,
+    "SACDescription": "Other higher education services"
+  },
+  {
+    "SACCode": 999259,
+    "SACDescription": "Specialised education services "
+  },
+  {
+    "SACCode": 999291,
+    "SACDescription": "Cultural education services"
+  },
+  {
+    "SACCode": 999292,
+    "SACDescription": "Sports and recreation education services"
+  },
+  {
+    "SACCode": 999293,
+    "SACDescription": "Commercial training and coaching services"
+  },
+  {
+    "SACCode": 999294,
+    "SACDescription": "Other education and training services n.e.c."
+  },
+  {
+    "SACCode": 999295,
+    "SACDescription": "services involving conduct of examination for admission to educational institutions"
+  },
+  {
+    "SACCode": 999299,
+    "SACDescription": "Other Educational support services"
+  },
+  {
+    "SACCode": 9993,
+    "SACDescription": "Human health and social care services"
+  },
+  {
+    "SACCode": 999311,
+    "SACDescription": "Inpatient services"
+  },
+  {
+    "SACCode": 999312,
+    "SACDescription": "Medical and dental services"
+  },
+  {
+    "SACCode": 999313,
+    "SACDescription": "Childbirth and related services"
+  },
+  {
+    "SACCode": 999314,
+    "SACDescription": "Nursing and Physiotherapeutic services"
+  },
+  {
+    "SACCode": 999315,
+    "SACDescription": "Ambulance services"
+  },
+  {
+    "SACCode": 999316,
+    "SACDescription": "Medical Laboratory and Diagnostic-imaging services"
+  },
+  {
+    "SACCode": 999317,
+    "SACDescription": "Blood, sperm and organ bank services"
+  },
+  {
+    "SACCode": 999319,
+    "SACDescription": "Other human health services including homeopathy, unani, ayurveda, naturopathy, acupuncture etc."
+  },
+  {
+    "SACCode": 999321,
+    "SACDescription": "Residential health-care services other than by hospitals"
+  },
+  {
+    "SACCode": 999322,
+    "SACDescription": "Residential care services for the elderly and persons with disabilities"
+  },
+  {
+    "SACCode": 999331,
+    "SACDescription": "Residential care services for children suffering from mental retardation, mental health illnesses or substance abuse"
+  },
+  {
+    "SACCode": 999332,
+    "SACDescription": "Other social services with accommodation for children"
+  },
+  {
+    "SACCode": 999333,
+    "SACDescription": "Residential care services for adults suffering from mental retardation, mental health illnesses or substance abuse"
+  },
+  {
+    "SACCode": 999334,
+    "SACDescription": "Other social services with accommodation for adults"
+  },
+  {
+    "SACCode": 999341,
+    "SACDescription": "Vocational rehabilitation services"
+  },
+  {
+    "SACCode": 999349,
+    "SACDescription": "Other social services without accommodation for the elderly and disabled n.e.c."
+  },
+  {
+    "SACCode": 999351,
+    "SACDescription": "Child day-care services"
+  },
+  {
+    "SACCode": 999352,
+    "SACDescription": "Guidance and counseling services n.e.c. related to children"
+  },
+  {
+    "SACCode": 999353,
+    "SACDescription": "Welfare services without accommodation"
+  },
+  {
+    "SACCode": 999359,
+    "SACDescription": "Other social services without accommodation n.e.c."
+  },
+  {
+    "SACCode": 9994,
+    "SACDescription": "Sewage and waste collection, treatment and disposal and other environmental protection services"
+  },
+  {
+    "SACCode": 999411,
+    "SACDescription": "Sewerage and sewage treatment services"
+  },
+  {
+    "SACCode": 999412,
+    "SACDescription": "Septic tank emptying and cleaning services"
+  },
+  {
+    "SACCode": 999421,
+    "SACDescription": "Collection services of hazardous waste"
+  },
+  {
+    "SACCode": 999422,
+    "SACDescription": "Collection services of non-hazardous recyclable materials"
+  },
+  {
+    "SACCode": 999423,
+    "SACDescription": "General waste collection services, residential"
+  },
+  {
+    "SACCode": 999424,
+    "SACDescription": "General waste collection services, other n.e.c."
+  },
+  {
+    "SACCode": 999431,
+    "SACDescription": "Waste preparation, consolidation and storage services"
+  },
+  {
+    "SACCode": 999432,
+    "SACDescription": "Hazardous waste treatment and disposal services"
+  },
+  {
+    "SACCode": 999433,
+    "SACDescription": "Non-hazardous waste treatment and disposal services"
+  },
+  {
+    "SACCode": 999441,
+    "SACDescription": "Site remediation and clean-up services"
+  },
+  {
+    "SACCode": 999442,
+    "SACDescription": "Containment, control and monitoring services and other site remediation services"
+  },
+  {
+    "SACCode": 999443,
+    "SACDescription": "Building remediation services"
+  },
+  {
+    "SACCode": 999449,
+    "SACDescription": "Other remediation services n.e.c."
+  },
+  {
+    "SACCode": 999451,
+    "SACDescription": "Sweeping and snow removal services"
+  },
+  {
+    "SACCode": 999459,
+    "SACDescription": "Other sanitation services n.e.c."
+  },
+  {
+    "SACCode": 999490,
+    "SACDescription": "Other environmental protection services n.e.c."
+  },
+  {
+    "SACCode": 9995,
+    "SACDescription": "Services of membership organisations"
+  },
+  {
+    "SACCode": 999511,
+    "SACDescription": "Services furnished by business and employers organizations"
+  },
+  {
+    "SACCode": 999512,
+    "SACDescription": "Services furnished by professional organizations"
+  },
+  {
+    "SACCode": 999520,
+    "SACDescription": "Services furnished by trade unions"
+  },
+  {
+    "SACCode": 999591,
+    "SACDescription": "Religious services"
+  },
+  {
+    "SACCode": 999592,
+    "SACDescription": "Services furnished by political organizations"
+  },
+  {
+    "SACCode": 999593,
+    "SACDescription": "Services furnished by human rights organizations"
+  },
+  {
+    "SACCode": 999594,
+    "SACDescription": "Cultural and recreational associations"
+  },
+  {
+    "SACCode": 999595,
+    "SACDescription": "Services furnished by environmental advocacy groups"
+  },
+  {
+    "SACCode": 999596,
+    "SACDescription": "Services provided by youth associations"
+  },
+  {
+    "SACCode": 999597,
+    "SACDescription": "Other civic and social organizations"
+  },
+  {
+    "SACCode": 999598,
+    "SACDescription": "Home owners associations"
+  },
+  {
+    "SACCode": 999599,
+    "SACDescription": "Services provided by other membership organizations n.e.c."
+  },
+  {
+    "SACCode": 9996,
+    "SACDescription": "Recreational, cultural and sporting services"
+  },
+  {
+    "SACCode": 999611,
+    "SACDescription": "Sound recording services"
+  },
+  {
+    "SACCode": 999612,
+    "SACDescription": "Motion picture, videotape, television and radio programme production services"
+  },
+  {
+    "SACCode": 999613,
+    "SACDescription": "Audiovisual post-production services"
+  },
+  {
+    "SACCode": 999614,
+    "SACDescription": "Motion picture, videotape and television programme distribution services"
+  },
+  {
+    "SACCode": 999615,
+    "SACDescription": "Motion picture projection services"
+  },
+  {
+    "SACCode": 999621,
+    "SACDescription": "Performing arts event promotion and organization services"
+  },
+  {
+    "SACCode": 999622,
+    "SACDescription": "Performing arts event production and presentation services"
+  },
+  {
+    "SACCode": 999623,
+    "SACDescription": "Performing arts facility operation services"
+  },
+  {
+    "SACCode": 999629,
+    "SACDescription": "Other performing arts and live entertainment services n.e.c."
+  },
+  {
+    "SACCode": 999631,
+    "SACDescription": "Services of performing artists including actors, readers, musicians, singers, dancers, TV personalities, independent models etc"
+  },
+  {
+    "SACCode": 999632,
+    "SACDescription": "Services of authors, composers, sculptors and other artists, except performing artists"
+  },
+  {
+    "SACCode": 999633,
+    "SACDescription": "Original works of authors, composers and other artists except performing artists, painters and sculptors"
+  },
+  {
+    "SACCode": 999641,
+    "SACDescription": "Museum and preservation services of historical sites and buildings"
+  },
+  {
+    "SACCode": 999642,
+    "SACDescription": "Botanical, zoological and nature reserve services"
+  },
+  {
+    "SACCode": 999651,
+    "SACDescription": "Sports and recreational sports event promotion and organization services"
+  },
+  {
+    "SACCode": 999652,
+    "SACDescription": "Sports and recreational sports facility operation services"
+  },
+  {
+    "SACCode": 999659,
+    "SACDescription": "Other sports and recreational sports services n.e.c."
+  },
+  {
+    "SACCode": 999661,
+    "SACDescription": "Services of athletes"
+  },
+  {
+    "SACCode": 999662,
+    "SACDescription": "Support services related to sports and recreation"
+  },
+  {
+    "SACCode": 999691,
+    "SACDescription": "Amusement park and similar attraction services"
+  },
+  {
+    "SACCode": 999692,
+    "SACDescription": "Gambling and betting services including similar online services"
+  },
+  {
+    "SACCode": 999693,
+    "SACDescription": "Coin-operated amusement machine services"
+  },
+  {
+    "SACCode": 999694,
+    "SACDescription": "Lottery services"
+  },
+  {
+    "SACCode": 999699,
+    "SACDescription": "Other recreation and amusement services n.e.c."
+  },
+  {
+    "SACCode": 9997,
+    "SACDescription": "Other services"
+  },
+  {
+    "SACCode": 999711,
+    "SACDescription": "Coin-operated laundry services"
+  },
+  {
+    "SACCode": 999712,
+    "SACDescription": "Dry-cleaning services (including fur product cleaning services)"
+  },
+  {
+    "SACCode": 999713,
+    "SACDescription": "Other textile cleaning services"
+  },
+  {
+    "SACCode": 999714,
+    "SACDescription": "Pressing services"
+  },
+  {
+    "SACCode": 999715,
+    "SACDescription": "Dyeing and colouring services"
+  },
+  {
+    "SACCode": 999719,
+    "SACDescription": "Other washing, cleaning and dyeing services n.e.c"
+  },
+  {
+    "SACCode": 999721,
+    "SACDescription": "Hairdressing and barbers services"
+  },
+  {
+    "SACCode": 999722,
+    "SACDescription": "Cosmetic treatment (including cosmetic/plastic surgery), manicuring and pedicuring services"
+  },
+  {
+    "SACCode": 999723,
+    "SACDescription": "Physical well-being services including health club & fitness centre"
+  },
+  {
+    "SACCode": 999729,
+    "SACDescription": "Other beauty treatment services n.e.c."
+  },
+  {
+    "SACCode": 999731,
+    "SACDescription": "Cemeteries and cremation services"
+  },
+  {
+    "SACCode": 999732,
+    "SACDescription": "Undertaking services"
+  },
+  {
+    "SACCode": 999791,
+    "SACDescription": "Services involving commercial use or exploitation of any event"
+  },
+  {
+    "SACCode": 999792,
+    "SACDescription": "Agreeing to do an act"
+  },
+  {
+    "SACCode": 999793,
+    "SACDescription": "Agreeing to refrain from doing an act"
+  },
+  {
+    "SACCode": 999794,
+    "SACDescription": "Agreeing to tolerate an act"
+  },
+  {
+    "SACCode": 999795,
+    "SACDescription": "Conduct of religious ceremonies/rituals by persons"
+  },
+  {
+    "SACCode": 999799,
+    "SACDescription": "Other services n.e.c."
+  },
+  {
+    "SACCode": 9998,
+    "SACDescription": "Domestic services"
+  },
+  {
+    "SACCode": 999800,
+    "SACDescription": "Domestic services both part time & full time"
+  },
+  {
+    "SACCode": 9999,
+    "SACDescription": "Services provided by extraterritorial organisations and bodies"
+  },
+  {
+    "SACCode": 999900,
+    "SACDescription": "Services provided by extraterritorial organizations and bodies"
+  }
+]

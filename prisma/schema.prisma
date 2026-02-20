@@ -1,0 +1,1095 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int                @id @default(autoincrement())
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @default(now()) @updatedAt
+  email            String             @unique
+  password         String
+  firstName        String
+  middleName       String?
+  lastName         String?
+  fatherName       String?
+  phone            String?
+  gender           UserGender
+  address          String?
+  pin              String?
+  aadhaar          String?
+  pan              String?
+  dob              DateTime?
+  avatar           String?
+  adminId          Int?
+  superadminId     Int?
+  verified         Boolean            @default(false)
+  userType         UserType           @default(normal)
+  ispanlinked      Boolean            @default(false)
+  inventory        Boolean            @default(false)
+  accounts         Account[]
+  agentId          Agent?
+  bankAccounts     BankDetails[]
+  businessProfile  BusinessProfile?
+  Cart             Cart?
+  categories       Category[]
+  clientAccounts   Client[]
+  gstr1_11_A2B     Gstr1_11A2A2[]
+  gstr1_11_B1B2    Gstr1_11B1B2[]
+  gstr1            Gstr1_4A[]
+  gstr1_5A         Gstr1_5A[]
+  gstr1_6A         Gstr1_6A[]
+  gstr1_7B         Gstr1_7B[]
+  gstr1_8ABCD      Gstr1_8ABCD[]
+  gstr1_9B         Gstr1_9B[]
+  gstr1_9B_un      Gstr1_9B_un[]
+  insurances       Insurance[]
+  invoices         Invoice[]
+  items            Item[]
+  journalEntries   JournalEntry[]
+  legders          Ledger[]
+  loans            LoanApplication[]
+  orders           Order[]
+  otps             Otp[]
+  parties          Party[]
+  payments         Payment[]
+  posts            Post[]
+  RegisterServices RegisterServices[]
+  registerStartup  RegisterStartup[]
+  Subscriptions    Subscriptions[]
+  transactions     Transaction[]
+  documents        UploadedDocument[]
+  userProfile      UserProfile?
+  gstr1_12HSN      gstr1_12HSN[]
+
+  @@index([userType])
+  @@index([phone])
+}
+
+model Otp {
+  id         Int      @id @default(autoincrement())
+  createdAt  DateTime @default(now())
+  otp        String
+  userId     Int
+  used       Boolean  @default(false)
+  deletedate DateTime
+  user       User     @relation(fields: [userId], references: [id])
+}
+
+model UserProfile {
+  id         Int        @id @default(autoincrement())
+  pan        String?
+  aadhaar    String?
+  firstName  String
+  middleName String?
+  lastName   String?
+  email      String     @unique
+  phone      String?
+  gender     UserGender
+  address    String?
+  pincode    String?
+  userId     Int        @unique
+  user       User       @relation(fields: [userId], references: [id])
+}
+
+model BusinessProfile {
+  id                     Int      @id @default(autoincrement())
+  businessName           String
+  pan                    String?
+  tan                    String?
+  taxpayer_type          String?
+  msme_number            String?
+  status                 String?
+  ctb                    String?
+  gstin                  String?
+  statecode              String?
+  street                 String?
+  city                   String?
+  dst                    String?
+  stcd                   String?
+  landmark               String?
+  bankName               String?
+  bankAccountNo          String?
+  bankIfsc               String?
+  bankBranch             String?
+  userId                 Int      @unique
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @default(now())
+  isAddressVerified      Boolean?
+  isBusinessNameVerified Boolean?
+  isGstinVerified        Boolean?
+  isPanVerified          Boolean?
+  isStateVerified        Boolean?
+  pincode                String?
+  state                  String?
+  user                   User     @relation(fields: [userId], references: [id])
+}
+
+model Cart {
+  id                   String             @id @default(uuid())
+  userId               Int                @unique
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @default(now()) @updatedAt
+  category             String?
+  user                 User               @relation(fields: [userId], references: [id])
+  services             ApiService[]       @relation("CartServices")
+  registrationServices RegisterServices[] @relation("CartToRegisterServices")
+  registrationStartup  RegisterStartup[]  @relation("CartToRegisterStartup")
+}
+
+model ApiService {
+  id           String          @id @default(uuid())
+  title        String
+  overview     String
+  price        Float
+  upcoming     Boolean
+  endpoint     Json?
+  bodyParams   Json?
+  response     Json?
+  responseJSON Json?
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @default(now()) @updatedAt
+  category     String
+  subscription Subscriptions[] @relation("ApiServiceToSubscriptions")
+  carts        Cart[]          @relation("CartServices")
+}
+
+model Subscriptions {
+  id                   String                @id @default(uuid())
+  userId               Int
+  amountForServices    Float
+  txnid                String?               @unique @default(uuid())
+  pid                  String?
+  subscriptionDuration SubscriptionsDuration @default(monthly)
+  status               SubscriptionStatus    @default(pending)
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @default(now())
+  user                 User                  @relation(fields: [userId], references: [id])
+  services             ApiService[]          @relation("ApiServiceToSubscriptions")
+  registrationServices RegisterServices[]    @relation("RegisterServicesToSubscriptions")
+  registrationStartup  RegisterStartup[]     @relation("RegisterStartupToSubscriptions")
+}
+
+model Ledger {
+  id             String        @id @default(uuid())
+  ledgerName     String
+  openingBalance Decimal       @default(0.0)
+  balance        Decimal       @default(0.0)
+  userId         Int
+  partyId        String?
+  year           Int
+  month          Int
+  ledgerType     LedgerType
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @default(now())
+  party          Party?        @relation(fields: [partyId], references: [id])
+  user           User          @relation(fields: [userId], references: [id])
+  transactions   Transaction[]
+}
+
+model JournalEntry {
+  id           String        @id @default(uuid())
+  entryDate    DateTime      @default(now())
+  description  String
+  userId       Int
+  user         User          @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+}
+
+model Transaction {
+  id              String          @id @default(uuid())
+  ledgerId        String
+  journalEntryId  String
+  amount          Decimal
+  transactionType TransactionType
+  userId          Int
+  date            DateTime
+  journalEntry    JournalEntry    @relation(fields: [journalEntryId], references: [id])
+  ledger          Ledger          @relation(fields: [ledgerId], references: [id])
+  user            User            @relation(fields: [userId], references: [id])
+}
+
+model Party {
+  id                String    @id @default(uuid())
+  partyName         String
+  type              PartyType
+  gstin             String?
+  pan               String?
+  tan               String?
+  upi               String?
+  email             String?
+  phone             String?
+  address           String?
+  bankName          String?
+  bankAccountNumber String?
+  bankIfsc          String?
+  bankBranch        String?
+  userId            Int
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @default(now())
+  invoices          Invoice[]
+  items             Item[]
+  ledgers           Ledger[]
+  user              User      @relation(fields: [userId], references: [id])
+}
+
+model StatusWiseIncomeTaxCode {
+  id     Int    @id @default(autoincrement())
+  code   String
+  status String
+}
+
+model InterestOnKVP {
+  id   Int   @id @default(autoincrement())
+  year Int
+  rate Float
+}
+
+model DepreciationTable {
+  id               Int    @id @default(autoincrement())
+  assetType        String
+  depreciationRate Float
+}
+
+model Category {
+  id           String @id @default(uuid())
+  categoryName String
+  userId       Int
+  user         User   @relation(fields: [userId], references: [id])
+  items        Item[]
+}
+
+model Item {
+  id            String        @id @default(uuid())
+  itemName      String
+  unit          ItemUnit      @default(pieces)
+  price         Decimal
+  openingStock  Decimal?
+  closingStock  Decimal?
+  purchasePrice Decimal?
+  cgst          Decimal?
+  sgst          Decimal?
+  igst          Decimal?
+  utgst         Decimal?
+  taxExempted   Boolean       @default(false)
+  description   String?
+  hsnCode       String?
+  categoryId    String?
+  supplierId    String?
+  userId        Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+  invoiceItems  InvoiceItem[]
+  category      Category?     @relation(fields: [categoryId], references: [id])
+  supplier      Party?        @relation(fields: [supplierId], references: [id])
+  user          User          @relation(fields: [userId], references: [id])
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  invoiceNumber String?
+  type          InvoiceType
+  totalAmount   Float
+  totalGst      Float?
+  stateOfSupply String
+  cgst          Float?
+  sgst          Float?
+  igst          Float?
+  utgst         Float?
+  details       String?
+  extraDetails  String?
+  invoiceDate   DateTime?
+  dueDate       DateTime?
+  isInventory   Boolean?
+  modeOfPayment ModeOfPayment
+  credit        Boolean
+  userId        Int
+  partyId       String
+  gstNumber     String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now())
+  status        InvoiceStatus
+  party         Party         @relation(fields: [partyId], references: [id])
+  user          User          @relation(fields: [userId], references: [id])
+  invoiceItems  InvoiceItem[]
+  accounts      Account[]     @relation("AccountToInvoice")
+}
+
+model InvoiceItem {
+  id         String  @id @default(uuid())
+  itemId     String?
+  quantity   Int
+  discount   Decimal @default(0.0)
+  taxPercent Decimal @default(0.0)
+  invoiceId  String
+  invoice    Invoice @relation(fields: [invoiceId], references: [id])
+  item       Item?   @relation(fields: [itemId], references: [id])
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  imgUrl      String?
+  description String?
+  price       Decimal
+  gst         Decimal
+  documents   Json
+  serviceType  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+}
+
+model Order {
+  id            Int         @id @default(autoincrement())
+  services      Json
+  status        OrderStatus @default(pending)
+  price         Decimal
+  gst           Decimal
+  orderTotal    Decimal
+  stateOfSupply String
+  userId        Int
+  user          User        @relation(fields: [userId], references: [id])
+}
+
+model Payment {
+  id                  String        @id @default(uuid())
+  razorpay_order_id   String
+  razorpay_payment_id String
+  status              PaymentStatus @default(created)
+  userId              Int
+  user                User          @relation(fields: [userId], references: [id])
+}
+
+model Library {
+  id                  Int      @id @default(autoincrement())
+  pan                 String
+  section             String
+  sub_section         String?
+  subject             String
+  ao_order            String
+  itat_no             String
+  rsa_no              String?
+  bench               String
+  appeal_no           String?
+  appellant           String?
+  respondent          String
+  appeal_type         String
+  appeal_filed_by     String
+  order_result        String
+  tribunal_order_date String
+  assessment_year     String
+  judgment            String
+  conclusion          String
+  download            String
+  upload              String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @default(now())
+}
+
+model Post {
+  id                 String   @id @default(uuid())
+  userId             Int
+  title              String
+  contentHeading     String
+  contentDescription String
+  category           String
+  imageUrl           String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @default(now())
+  user               User     @relation(fields: [userId], references: [id])
+}
+
+model Account {
+  id            String    @id @default(uuid())
+  accountName   String
+  totalDebit    Decimal   @default(0.0)
+  totalCredit   Decimal   @default(0.0)
+  debitBalance  Decimal   @default(0.0)
+  creditBalance Decimal   @default(0.0)
+  date          DateTime  @default(now())
+  userId        Int
+  user          User      @relation(fields: [userId], references: [id])
+  invoices      Invoice[] @relation("AccountToInvoice")
+}
+
+model Career {
+  id        Int        @id @default(autoincrement())
+  name      String
+  address   String
+  pin       String
+  email     String
+  mobile    String
+  skills    String
+  gender    UserGender
+  cv        String
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @default(now())
+}
+
+model Billrecieve {
+  id              Int           @id @default(autoincrement())
+  billNumber      String
+  amount          String
+  tax             String
+  customerName    String
+  customerAddress String
+  contact         String
+  itemQuantity    String
+  itemPrice       String
+  itemDescription String
+  paymentStatus   paymentStatus @default(unpaid)
+  paymentMethod   paymentMethod @default(cash)
+  dueDate         String
+  comment         String?
+}
+
+model Billpayable {
+  id              Int           @id @default(autoincrement())
+  supplierName    String
+  supplierAddress String
+  contact         String
+  billDate        String
+  dueDate         String
+  billAmount      String
+  billNumber      String
+  billDiscription String
+  paymentMethod   paymentMethod @default(cash)
+  transactionId   String?
+  paymentDate     String
+  paymentAmount   String
+  tax             String
+  comment         String?
+  invoiceNumber   String?
+}
+
+model UploadedDocument {
+  id            String           @id @default(uuid())
+  userId        Int
+  fileName      String
+  applicationId String?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @default(now())
+  application   LoanApplication? @relation(fields: [applicationId], references: [id])
+  user          User             @relation(fields: [userId], references: [id])
+  docs          LoanDocument[]   @relation("LoanDocumentToUploadedDocument")
+}
+
+model LoanDocument {
+  id          String             @id @default(uuid())
+  name        String
+  shortName   String
+  mandatory   Boolean            @default(false)
+  type        DocumentType
+  description String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @default(now())
+  documents   UploadedDocument[] @relation("LoanDocumentToUploadedDocument")
+  loans       Loan[]             @relation("LoanToLoanDocument")
+}
+
+model Loan {
+  id           String            @id @default(uuid())
+  type         LoanType
+  name         String
+  shortName    String?
+  description  String?
+  maxAmount    Decimal?
+  minAmount    Decimal?
+  interest     Decimal
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @default(now())
+  applications LoanApplication[]
+  documents    LoanDocument[]    @relation("LoanToLoanDocument")
+}
+
+model LoanApplication {
+  id               String             @id @default(uuid())
+  loanId           String
+  loanAmount       Decimal
+  loanStatus       LoanStatus         @default(pending)
+  applicantName    String
+  applicantAge     Int
+  loanType         LoanType
+  applicantGender  UserGender
+  nationality      Nationality
+  description      String
+  salaried         Boolean
+  bankAccountId    String
+  phone            String?
+  email            String?
+  address          String?
+  permanentAddress String
+  userId           Int
+  agentId          String?
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @default(now())
+  agent            Agent?             @relation(fields: [agentId], references: [id])
+  bankDetails      BankDetails        @relation(fields: [bankAccountId], references: [id])
+  loan             Loan               @relation(fields: [loanId], references: [id])
+  user             User               @relation(fields: [userId], references: [id])
+  documents        UploadedDocument[]
+}
+
+model BankDetails {
+  id                String            @id @default(uuid())
+  accountHolderName String
+  bankName          String
+  bankAccountNo     String
+  bankIfsc          String
+  bankBranch        String
+  bankAccountType   BankAccountType
+  userId            Int
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @default(now())
+  user              User              @relation(fields: [userId], references: [id])
+  loans             LoanApplication[]
+}
+
+model Insurance {
+  id            String     @id @default(uuid())
+  type          String
+  name          String
+  mobile        String
+  email         String
+  address       String
+  dob           DateTime
+  maritalStatus String
+  gender        UserGender
+  userId        Int
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @default(now())
+  user          User       @relation(fields: [userId], references: [id])
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  userId    Int
+  agentId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  agent     Agent    @relation(fields: [agentId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Agent {
+  id        String            @id @default(uuid())
+  userId    Int               @unique
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @default(now())
+  user      User              @relation(fields: [userId], references: [id])
+  clients   Client[]
+  loans     LoanApplication[]
+}
+
+model Visitor {
+  id        Int      @id @default(autoincrement())
+  count     Int      @default(0)
+  createdAt DateTime @default(now())
+}
+
+model RegisterStartup {
+  id               Int               @id @default(autoincrement())
+  title            String
+  image            String
+  priceWithGst     Int?
+  aboutService     String?
+  userId           Int
+  categories       StartupCategory
+  RegisterServices RegisterServices?
+  user             User              @relation(fields: [userId], references: [id])
+  cart             Cart[]            @relation("CartToRegisterStartup")
+  subscriptions    Subscriptions[]   @relation("RegisterStartupToSubscriptions")
+}
+
+model RegisterServices {
+  id              Int             @id @default(autoincrement())
+  serviceId       Int             @unique
+  userId          Int
+  aadhaarCard     String
+  panCard         String
+  gstCertificate  String
+  photo           String
+  registerStartup RegisterStartup @relation(fields: [serviceId], references: [id])
+  user            User            @relation(fields: [userId], references: [id])
+  cart            Cart[]          @relation("CartToRegisterServices")
+  subscriptions   Subscriptions[] @relation("RegisterServicesToSubscriptions")
+}
+
+model ContactUs {
+  id      Int    @id @default(autoincrement())
+  name    String
+  email   String
+  message String
+}
+
+model About {
+  id          String @id @default(uuid())
+  name        String
+  position    String
+  image       String
+  description String
+}
+
+model Gstr1_4A {
+  id                Int      @id @default(autoincrement())
+  userId            Int
+  LegalName         String
+  GSTN              String
+  pos               String
+  invoice_No        String
+  invoice_date      String
+  invoice_value     String
+  rate              String
+  nature            String
+  source            String
+  cgst              String
+  igst              String
+  sgst              String
+  supply_type       String
+  fy                String
+  period            String
+  taxpayer_type     String
+  trade_Name        String?
+  processed_records String
+  status            String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now())
+  user              User     @relation(fields: [userId], references: [id])
+}
+
+model Gstr1_5A {
+  id                  Int             @id @default(autoincrement())
+  userId              Int
+  sr_no               Int             @unique
+  pos                 String
+  invoice_No          String
+  supply_type         String
+  invoice_value       String
+  invoice_date        String
+  total_taxable_value String
+  integrated_tax      String
+  cess                String
+  total_invoice_value String
+  user                User            @relation(fields: [userId], references: [id])
+  gstr1_5A_items      Gstr1_5A_item[]
+}
+
+model Gstr1_5A_item {
+  id             Int      @id @default(autoincrement())
+  tax_rate       String   @default("0%")
+  Ammmout_of_tax String
+  Igst           String
+  cess           String
+  gstr1_5A_id    Int
+  gstr1_5A       Gstr1_5A @relation(fields: [gstr1_5A_id], references: [id])
+}
+
+model Gstr1_6A {
+  id                  Int             @id @default(autoincrement())
+  userId              Int
+  sr_no               Int             @unique
+  pos                 String
+  invoice_no          String
+  supply_type         String
+  invoice_data        String
+  invoice_value       String
+  total_value         String
+  gst_payement        String
+  total_taxable_value String
+  integarted_tax      String
+  cess                String
+  user                User            @relation(fields: [userId], references: [id])
+  gstr1_6A_items      Gstr1_6A_item[]
+}
+
+model Gstr1_6A_item {
+  id               Int      @id @default(autoincrement())
+  pecentage        String
+  integrated_value String
+  cgst             String
+  sgst             String
+  gstr1_6A_id      Int
+  gstr1_6A         Gstr1_6A @relation(fields: [gstr1_6A_id], references: [id])
+}
+
+model Gstr1_7B {
+  id              Int    @id @default(autoincrement())
+  userId          Int
+  gstn            String
+  sr_no           Int    @unique
+  pos             String
+  taxable_value   String
+  supply_type     String
+  rate            String
+  central_tax     String
+  state_tax       String
+  cess            String
+  place_of_supply String
+  total_taxable   String
+  integrated      String
+  user            User   @relation(fields: [userId], references: [id])
+}
+
+model Gstr1_8ABCD {
+  id            Int    @id @default(autoincrement())
+  userId        Int
+  gstn          String
+  sr_no         Int    @unique
+  pos           String
+  taxable_value String
+  supply_type   String
+  rate          String
+  central_tax   String
+  state_tax     String
+  cess          String
+  user          User   @relation(fields: [userId], references: [id])
+}
+
+model Gstr1_9B {
+  id                     Int    @id @default(autoincrement())
+  userId                 Int
+  gstn                   String
+  sr_no                  Int    @unique
+  recipient_name         String
+  name_as_master         String
+  debit_credit_note_no   String
+  debit_credit_note_date String
+  state_tax              String
+  note_type              String
+  supply_type            String
+  items_details          String
+  select_rate            String
+  note_values            String
+  state_tax_rs           String
+  central_tax            String
+  cess                   String
+  user                   User   @relation(fields: [userId], references: [id])
+}
+
+model Gstr1_9B_un {
+  id                     Int    @id @default(autoincrement())
+  userId                 Int
+  sr_no                  Int    @unique
+  type                   String
+  debit_credit_note_no   String
+  debit_credit_note_date String
+  state_tax              String
+  note_type              String
+  supply_type            String
+  item_details           String
+  select_rate            String
+  note_value             String
+  state_tax_rs           String
+  central_tax_rs         String
+  cess                   String
+  user                   User   @relation(fields: [userId], references: [id])
+}
+
+model Gstr1_11A2A2 {
+  id     Int    @id @default(autoincrement())
+  userId Int
+  sr_no  Int    @unique
+  pos    String
+  supply String
+  cess   String
+  user   User   @relation(fields: [userId], references: [id])
+}
+
+model Gstr1_11B1B2 {
+  id            Int    @id @default(autoincrement())
+  userId        Int
+  sr_no         Int    @unique
+  pos           String
+  taxable_value String
+  rate          String
+  supply_type   String
+  cess          String
+  igst          String
+  cgst          String
+  sgst          String
+  user          User   @relation(fields: [userId], references: [id])
+}
+
+model gstr1_12HSN {
+  id            Int    @id @default(autoincrement())
+  userId        Int
+  sr_no         Int    @unique
+  pos           String
+  taxable_value String
+  rate          String
+  supply_type   String
+  cess          String
+  igst          String
+  cgst          String
+  sgst          String
+  user          User   @relation(fields: [userId], references: [id])
+}
+
+model CountryCodeList {
+  id           String        @id @default(uuid())
+  assessYear   String        @unique
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @default(now())
+  countryCodes CountryCode[] @relation("CountryCodeToCountryCodeList")
+}
+
+model CountryCode {
+  id              String            @id @default(uuid())
+  countryCode     String
+  countryName     String
+  countryCodeList CountryCodeList[] @relation("CountryCodeToCountryCodeList")
+}
+
+model GoldAndSilver {
+  id                      String @id @default(uuid())
+  assessmentYear          String
+  stGoldRate24CPer10Grams String
+  stSilverRateFor1Kg      String
+}
+
+model CostInflationList {
+  id                 String               @id @default(uuid())
+  financeAct         String
+  listName           String               @unique
+  costInflationIndex CostInflationIndex[] @relation("CostInflationIndexToCostInflationList")
+}
+
+model CostInflationIndex {
+  id                 String              @id @default(uuid())
+  financialYear      String
+  costInflationIndex Int
+  costInflationList  CostInflationList[] @relation("CostInflationIndexToCostInflationList")
+}
+
+model PanAndITCodeByStatus {
+  id                       String                     @id @default(uuid())
+  status                   String                     @unique
+  incomeTaxCode            Int
+  panCode                  String
+  PanAndITCodeByStatusList PanAndITCodeByStatusList[] @relation("PanAndITCodeByStatusToPanAndITCodeByStatusList")
+}
+
+model PanAndITCodeByStatusList {
+  id                   String                 @id @default(uuid())
+  financialYear        String                 @unique
+  PanAndITCodeByStatus PanAndITCodeByStatus[] @relation("PanAndITCodeByStatusToPanAndITCodeByStatusList")
+}
+
+model InterestRatesAccrued {
+  id                        String                      @id @default(uuid())
+  duration                  String
+  rate                      Float
+  interestAccruedonNational InterestAccruedonNational[] @relation("InterestAccruedonNationalToInterestRatesAccrued")
+}
+
+model InterestAccruedonNational {
+  id                            String                          @id @default(uuid())
+  purchaseDuration              String
+  interestAccruedonNationalList InterestAccruedonNationalList[] @relation("InterestAccruedonNationalToInterestAccruedonNationalList")
+  interestRatesAccrued          InterestRatesAccrued[]          @relation("InterestAccruedonNationalToInterestRatesAccrued")
+}
+
+model InterestAccruedonNationalList {
+  id                        String                      @id @default(uuid())
+  listNumber                String                      @unique
+  financeAct                String
+  interestAccruedonNational InterestAccruedonNational[] @relation("InterestAccruedonNationalToInterestAccruedonNationalList")
+}
+
+enum UserType {
+  admin
+  normal
+  agent
+  superadmin
+}
+
+enum UserGender {
+  male
+  female
+  other
+}
+
+enum SubscriptionStatus {
+  initiated
+  pending
+  success
+  failure
+  usercancelled
+  droppedF
+  bounced
+}
+
+enum SubscriptionsDuration {
+  monthly
+  quarterly
+  halfYealy
+  yearly
+}
+
+enum LedgerType {
+  bank
+  cash
+  purchase
+  sales
+  directExpense
+  indirectExpense
+  directIncome
+  indirectIncome
+  fixedAssets
+  currentAssets
+  loansAndLiabilitieslw
+  accountsReceivable
+  accountsPayable
+}
+
+enum TransactionType {
+  credit
+  debit
+}
+
+enum PartyType {
+  customer
+  supplier
+}
+
+enum ItemUnit {
+  pieces
+  grams
+  kilograms
+  liters
+  milliliters
+  meters
+  centimeters
+  inches
+  feet
+  squareMeters
+  squareFeet
+  cubicMeters
+  cubicFeet
+  dozen
+  pack
+  carton
+  box
+  roll
+  bundle
+  pair
+  set
+}
+
+enum InvoiceType {
+  sales
+  purchase
+  sales_return
+  purchase_return
+}
+
+enum ModeOfPayment {
+  cash
+  bank
+  upi
+  credit
+}
+
+enum InvoiceStatus {
+  unpaid
+  paid
+  overdue
+}
+
+enum OrderStatus {
+  initiated
+  pending
+  success
+  failure
+  usercancelled
+  dropped
+  bounced
+}
+
+enum PaymentStatus {
+  created
+  success
+  failed
+}
+
+enum paymentStatus {
+  paid
+  unpaid
+  overdue
+}
+
+enum paymentMethod {
+  cash
+  creditcard
+  upi
+  netbanking
+  cheque
+}
+
+enum DocumentType {
+  pdf
+  image
+  other
+}
+
+enum LoanType {
+  personal
+  education
+  home
+  business
+  car
+  property
+}
+
+enum Nationality {
+  resident
+  nri
+  foreign
+}
+
+enum LoanStatus {
+  pending
+  processing
+  review
+  accepted
+  rejected
+}
+
+enum BankAccountType {
+  savings
+  current
+  nri
+  fcnr
+  rd
+  fd
+  salary
+}
+
+enum Under {
+  sales
+  Revenue
+}
+
+enum NAME {
+  sales
+  cash
+  Rent
+  Expense
+}
+
+enum CurrencyType {
+  INR
+  USD
+  EUR
+  RUB
+}
+
+enum StartupCategory {
+  registration
+  companyRegistration
+  returns
+  audits
+}

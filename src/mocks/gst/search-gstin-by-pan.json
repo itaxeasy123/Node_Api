@@ -1,0 +1,30 @@
+{
+  "status_cd": "1",
+  "status_desc": "Success",
+  "data": {
+    "pan": "ABCDE1234F",
+    "state_code": "09",
+    "taxpayer_type": "REGULAR",
+    "gstin_list": [
+      {
+        "gstin": "09ABCDE1234F1Z5",
+        "status": "Active",
+        "lgnm": "MOCK TAXPAYER PRIVATE LIMITED",
+        "trade_name": "MOCK TAXPAYER",
+        "registration_date": "2021-07-01",
+        "constitution_of_business": "Private Limited Company",
+        "nature_of_business": [
+          "Office / Sale Office",
+          "Supplier of Services"
+        ],
+        "principal_place_of_business": {
+          "address": "Sector 62",
+          "city": "Noida",
+          "district": "Gautam Buddha Nagar",
+          "state": "Uttar Pradesh",
+          "pincode": "201309"
+        }
+      }
+    ]
+  }
+}

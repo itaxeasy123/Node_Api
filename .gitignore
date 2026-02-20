@@ -1,0 +1,9 @@
+node_modules/
+
+.env
+memorylogs
+*.txt
+.vscode
+dist
+uploads
+/compose.yaml
