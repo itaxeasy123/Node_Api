@@ -12,3 +12,4 @@ servicesRouter.put('/:id', verifyToken, adminCheck, ServicesController.updateSer
 servicesRouter.delete('/:id', verifyToken, adminCheck, ServicesController.deleteService);
 
 export default servicesRouter;
+

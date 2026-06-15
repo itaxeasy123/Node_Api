@@ -1,24 +1,25 @@
-import Razorpay from "razorpay";
+// import Razorpay from "razorpay";
 import crypto from "crypto";
 import { Request, Response } from "express";
 import { prisma } from "../..";
 import ApiServiceController from "../apiservice.controller";
 import { config } from 'dotenv';
 import path from "path";
-
+import {getRazorpayInstance} from "../../services/razorpay.service"
 config(
   {
     path: path.resolve(__dirname, "../../../.env"),
   }
 );
-function getRazorpayInstance() {
-  const key_id = process.env.rzp_key_id;
-  const key_secret = process.env.rzp_key_secret;
-  if (!key_id || !key_secret) {
-    return null;
-  }
-  return new Razorpay({ key_id, key_secret });
-}
+
+// function getRazorpayInstance() {
+//   const key_id = process.env.rzp_key_id;
+//   const key_secret = process.env.rzp_key_secret;
+//   if (!key_id || !key_secret) {
+//     return null;
+//   }
+//   return new Razorpay({ key_id, key_secret });
+// }
 
 export default class RazorpayService {
 
@@ -84,16 +85,24 @@ export default class RazorpayService {
           console.log("Order created successfully:", order);
     
           // Save the order in the database
-          await prisma.payment.create({
-            data: {
-              razorpay_order_id: order.id,
-              razorpay_payment_id: "",
-              status: "created",
-              userId,
-              orderId: 1, // Replace with appropriate logic for generating order ID
-            },
-          });
-    
+          // await prisma.payment.create({
+          //   data: {
+          //     razorpay_order_id: order.id,
+          //     razorpay_payment_id: "",
+          //     status: "created",
+          //     userId,
+          //     orderId: 1, 
+          //   },
+          // });
+                 // payemt data acording to prisma
+     await prisma.payment.create({
+  data: {
+    razorpay_order_id: order.id,
+    razorpay_payment_id: "",
+    status: "created",
+    userId,
+  },
+}); 
           return res.status(200).json({
             success: true,
             message: "Order created successfully.",

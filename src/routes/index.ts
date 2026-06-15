@@ -32,7 +32,7 @@ import registerStartupRouter from "./registerStartup.routes";
 import contactUsRouter from "./contactUs.routes";
 import insurancerouter from "./insurance.routes";
 import { registerAbout } from "./about.routes";
-import accountancyRouter from "./accountancy.routes";
+import billshieldRouter from "./billshield.routes";
 import HsnAndSACRouter from "./hsnAndSac.routes";
 import billpayablerouter from "./billpayable.routes";
 import billrecievablerouter from "./billrecivable.routes";
@@ -53,6 +53,8 @@ import cartRouter from "./cart.routes";
 import cartStartupRouter from "./cartstartup.routes";
 import tdsRouter from "./tds.routes";
 import tcsRouter from "./tcs.routes";
+import projectReportRouter from "./projectreport.routes";
+import itrInquiryRouter from "./itrinquiry.routes";
 const router = Router();
 
 router.use("/user", userRouter);
@@ -87,7 +89,7 @@ router.use("/sandbox/gst", sandboxGstRoutes);
 // 🔥 ADD THIS LINE (MOST IMPORTANT)
 
 
-router.use("/accountancy", accountancyRouter);
+router.use("/billshield", billshieldRouter);
 
 router.use("/services", servicesRouter);
 
@@ -154,6 +156,10 @@ router.use("/ewaybill",ewaybill);
 router.use("/tds", tdsRouter);
 
 router.use("/tcs",tcsRouter);
+
+router.use("/projectreport", projectReportRouter);
+
+router.use("/itrinquiry", itrInquiryRouter);
 
 router.get("/", (req, res) => {
   return res.send({ message: "Up and running" });

@@ -31,7 +31,6 @@ model User {
   userType         UserType           @default(normal)
   ispanlinked      Boolean            @default(false)
   inventory        Boolean            @default(false)
-  accounts         Account[]
   agentId          Agent?
   bankAccounts     BankDetails[]
   businessProfile  BusinessProfile?
@@ -50,8 +49,6 @@ model User {
   insurances       Insurance[]
   invoices         Invoice[]
   items            Item[]
-  journalEntries   JournalEntry[]
-  legders          Ledger[]
   loans            LoanApplication[]
   orders           Order[]
   otps             Otp[]
@@ -61,13 +58,74 @@ model User {
   RegisterServices RegisterServices[]
   registerStartup  RegisterStartup[]
   Subscriptions    Subscriptions[]
-  transactions     Transaction[]
   documents        UploadedDocument[]
   userProfile      UserProfile?
   gstr1_12HSN      gstr1_12HSN[]
+  companyMemberships CompanyUser[]
+  vouchersCreated  Voucher[]
+  auditLogs        AuditLog[]
+  projectReports   ProjectReport[]
+  itrInquiries     ItrInquiry[]
+  refreshTokens    RefreshToken[]
 
   @@index([userType])
   @@index([phone])
+  @@index([createdAt])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid()) // the JWT "jti"
+  userId    Int
+  revoked   Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model ProjectReport {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  userId       Int
+  businessName String
+  pdfUrl       String
+  pdfPublicId  String?
+  user         User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([createdAt])
+}
+
+enum ItrInquiryStatus {
+  pending
+  approved
+  rejected
+  paid
+}
+
+model ItrInquiry {
+  id              Int              @id @default(autoincrement())
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @default(now()) @updatedAt
+  userId          Int
+  name            String
+  phone           String
+  aadhaarNumber   String?
+  description     String?
+  aadhaarUrl      String?
+  panUrl          String?
+  otherDocUrl     String?
+  photoUrl        String?
+  status          ItrInquiryStatus @default(pending)
+  amount          Float?
+  razorpayOrderId String?
+  user            User             @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@index([createdAt])
 }
 
 model Otp {
@@ -78,6 +136,7 @@ model Otp {
   used       Boolean  @default(false)
   deletedate DateTime
   user       User     @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model UserProfile {
@@ -164,6 +223,7 @@ model Subscriptions {
   amountForServices    Float
   txnid                String?               @unique @default(uuid())
   pid                  String?
+  note                 String?
   subscriptionDuration SubscriptionsDuration @default(monthly)
   status               SubscriptionStatus    @default(pending)
   createdAt            DateTime              @default(now())
@@ -172,46 +232,243 @@ model Subscriptions {
   services             ApiService[]          @relation("ApiServiceToSubscriptions")
   registrationServices RegisterServices[]    @relation("RegisterServicesToSubscriptions")
   registrationStartup  RegisterStartup[]     @relation("RegisterStartupToSubscriptions")
+  @@index([userId, createdAt])
+  @@index([createdAt])
+  @@index([status])
 }
 
-model Ledger {
-  id             String        @id @default(uuid())
-  ledgerName     String
-  openingBalance Decimal       @default(0.0)
-  balance        Decimal       @default(0.0)
-  userId         Int
-  partyId        String?
-  year           Int
-  month          Int
-  ledgerType     LedgerType
-  createdAt      DateTime      @default(now())
-  updatedAt      DateTime      @default(now())
-  party          Party?        @relation(fields: [partyId], references: [id])
-  user           User          @relation(fields: [userId], references: [id])
-  transactions   Transaction[]
+// ========== BILLSHIELD — DOUBLE-ENTRY ACCOUNTING ==========
+
+model Company {
+  id             String   @id @default(uuid())
+  name           String
+  gstin          String?
+  pan            String?
+  stateCode      String?
+  fyStartMonth   Int      @default(4)
+  booksBeginDate DateTime
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @default(now()) @updatedAt
+
+  members        CompanyUser[]
+  fiscalYears    FiscalYear[]
+  accountGroups  AccountGroup[]
+  ledgerAccounts LedgerAccount[]
+  voucherTypes   VoucherType[]
+  vouchers       Voucher[]
+  auditLogs      AuditLog[]
 }
 
-model JournalEntry {
-  id           String        @id @default(uuid())
-  entryDate    DateTime      @default(now())
-  description  String
-  userId       Int
-  user         User          @relation(fields: [userId], references: [id])
-  transactions Transaction[]
+model CompanyUser {
+  id        String      @id @default(uuid())
+  companyId String
+  userId    Int
+  role      CompanyRole @default(OWNER)
+  createdAt DateTime    @default(now())
+
+  company   Company     @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id])
+
+  @@unique([companyId, userId])
+  @@index([userId])
 }
 
-model Transaction {
-  id              String          @id @default(uuid())
-  ledgerId        String
-  journalEntryId  String
-  amount          Decimal
-  transactionType TransactionType
-  userId          Int
-  date            DateTime
-  journalEntry    JournalEntry    @relation(fields: [journalEntryId], references: [id])
-  ledger          Ledger          @relation(fields: [ledgerId], references: [id])
-  user            User            @relation(fields: [userId], references: [id])
+model FiscalYear {
+  id        String   @id @default(uuid())
+  companyId String
+  label     String
+  startDate DateTime
+  endDate   DateTime
+  isClosed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  company   Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  vouchers  Voucher[]
+  sequences VoucherSequence[]
+
+  @@unique([companyId, startDate])
+  @@index([companyId])
 }
+
+model AccountGroup {
+  id            String        @id @default(uuid())
+  companyId     String
+  name          String
+  parentGroupId String?
+  nature        AccountNature
+  reportSection ReportSectionType
+  isSystem      Boolean       @default(false)
+  path          String
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
+
+  company     Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  parentGroup AccountGroup?  @relation("GroupTree", fields: [parentGroupId], references: [id])
+  subGroups   AccountGroup[] @relation("GroupTree")
+  ledgers     LedgerAccount[]
+
+  @@unique([companyId, name])
+  @@index([companyId, parentGroupId])
+  @@index([companyId, path])
+  @@index([parentGroupId])
+}
+
+model LedgerAccount {
+  id                 String  @id @default(uuid())
+  companyId          String
+  name               String
+  groupId            String
+  openingBalance     Decimal @default(0.0) @db.Decimal(15, 2)
+  openingBalanceType DrCr    @default(DR)
+  isSystem           Boolean @default(false)
+  partyId            String?
+  bankName           String?
+  bankAccountNo      String?
+  bankIfsc           String?
+  description        String?
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @default(now()) @updatedAt
+
+  company Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  group   AccountGroup  @relation(fields: [groupId], references: [id])
+  party   Party?        @relation(fields: [partyId], references: [id])
+  lines   VoucherLine[]
+
+  @@unique([companyId, name])
+  @@index([companyId, groupId])
+  @@index([partyId])
+  @@index([groupId])
+}
+
+model VoucherType {
+  id        String          @id @default(uuid())
+  companyId String
+  name      String
+  code      String
+  baseType  VoucherBaseType
+  isSystem  Boolean         @default(false)
+
+  company   Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  vouchers  Voucher[]
+  sequences VoucherSequence[]
+
+  @@unique([companyId, code])
+}
+
+model VoucherSequence {
+  id            String @id @default(uuid())
+  voucherTypeId String
+  fiscalYearId  String
+  nextNumber    Int    @default(1)
+
+  voucherType VoucherType @relation(fields: [voucherTypeId], references: [id], onDelete: Cascade)
+  fiscalYear  FiscalYear  @relation(fields: [fiscalYearId], references: [id], onDelete: Cascade)
+
+  @@unique([voucherTypeId, fiscalYearId])
+  @@index([fiscalYearId])
+}
+
+model Voucher {
+  id            String        @id @default(uuid())
+  companyId     String
+  fiscalYearId  String
+  voucherTypeId String
+  voucherNo     String?
+  voucherDate   DateTime
+  narration     String?
+  partyId       String?
+  status        VoucherStatus @default(DRAFT)
+  reversalOfId  String?       @unique
+  postedAt      DateTime?
+  createdById   Int
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @default(now()) @updatedAt
+
+  company     Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  fiscalYear  FiscalYear     @relation(fields: [fiscalYearId], references: [id])
+  voucherType VoucherType    @relation(fields: [voucherTypeId], references: [id])
+  party       Party?         @relation(fields: [partyId], references: [id])
+  reversalOf  Voucher?       @relation("VoucherReversal", fields: [reversalOfId], references: [id])
+  reversedBy  Voucher?       @relation("VoucherReversal")
+  createdBy   User           @relation(fields: [createdById], references: [id])
+  lines       VoucherLine[]
+  gstLines    VoucherGstLine[]
+
+  @@unique([companyId, voucherNo])
+  @@index([companyId, voucherDate])
+  @@index([companyId, voucherTypeId])
+  @@index([companyId, status])
+  @@index([partyId])
+  @@index([fiscalYearId])
+  @@index([voucherTypeId])
+  @@index([createdById])
+}
+
+model VoucherLine {
+  id        String  @id @default(uuid())
+  voucherId String
+  lineNo    Int
+  ledgerId  String
+  debit     Decimal @default(0.0) @db.Decimal(15, 2)
+  credit    Decimal @default(0.0) @db.Decimal(15, 2)
+  narration String?
+
+  voucher        Voucher             @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+  ledger         LedgerAccount       @relation(fields: [ledgerId], references: [id])
+  reconciliation BankReconciliation?
+
+  @@index([voucherId])
+  @@index([ledgerId, voucherId])
+}
+
+model VoucherGstLine {
+  id           String  @id @default(uuid())
+  voucherId    String
+  description  String?
+  hsnSac       String?
+  taxableValue Decimal @default(0.0) @db.Decimal(15, 2)
+  cgst         Decimal @default(0.0) @db.Decimal(15, 2)
+  sgst         Decimal @default(0.0) @db.Decimal(15, 2)
+  igst         Decimal @default(0.0) @db.Decimal(15, 2)
+  cess         Decimal @default(0.0) @db.Decimal(15, 2)
+
+  voucher Voucher @relation(fields: [voucherId], references: [id], onDelete: Cascade)
+
+  @@index([voucherId])
+}
+
+model BankReconciliation {
+  id             String    @id @default(uuid())
+  voucherLineId  String    @unique
+  instrumentNo   String?
+  instrumentDate DateTime?
+  clearedOn      DateTime?
+  statementRef   String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @default(now()) @updatedAt
+
+  voucherLine VoucherLine @relation(fields: [voucherLineId], references: [id], onDelete: Cascade)
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  companyId String
+  userId    Int
+  action    String
+  tableName String
+  recordId  String
+  before    Json?
+  after     Json?
+  createdAt DateTime @default(now())
+
+  company Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@index([companyId, tableName, recordId])
+  @@index([userId])
+}
+
+// ========== END BILLSHIELD ==========
 
 model Party {
   id                String    @id @default(uuid())
@@ -233,8 +490,10 @@ model Party {
   updatedAt         DateTime  @default(now())
   invoices          Invoice[]
   items             Item[]
-  ledgers           Ledger[]
+  ledgerAccounts    LedgerAccount[]
+  vouchers          Voucher[]
   user              User      @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model StatusWiseIncomeTaxCode {
@@ -261,6 +520,7 @@ model Category {
   userId       Int
   user         User   @relation(fields: [userId], references: [id])
   items        Item[]
+  @@index([userId])
 }
 
 model Item {
@@ -287,6 +547,9 @@ model Item {
   category      Category?     @relation(fields: [categoryId], references: [id])
   supplier      Party?        @relation(fields: [supplierId], references: [id])
   user          User          @relation(fields: [userId], references: [id])
+  @@index([userId])
+  @@index([categoryId])
+  @@index([supplierId])
 }
 
 model Invoice {
@@ -316,7 +579,9 @@ model Invoice {
   party         Party         @relation(fields: [partyId], references: [id])
   user          User          @relation(fields: [userId], references: [id])
   invoiceItems  InvoiceItem[]
-  accounts      Account[]     @relation("AccountToInvoice")
+  @@index([userId])
+  @@index([partyId])
+  @@index([createdAt])
 }
 
 model InvoiceItem {
@@ -328,6 +593,8 @@ model InvoiceItem {
   invoiceId  String
   invoice    Invoice @relation(fields: [invoiceId], references: [id])
   item       Item?   @relation(fields: [itemId], references: [id])
+  @@index([invoiceId])
+  @@index([itemId])
 }
 
 model Service {
@@ -352,6 +619,7 @@ model Order {
   stateOfSupply String
   userId        Int
   user          User        @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Payment {
@@ -361,6 +629,7 @@ model Payment {
   status              PaymentStatus @default(created)
   userId              Int
   user                User          @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Library {
@@ -400,19 +669,8 @@ model Post {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @default(now())
   user               User     @relation(fields: [userId], references: [id])
-}
-
-model Account {
-  id            String    @id @default(uuid())
-  accountName   String
-  totalDebit    Decimal   @default(0.0)
-  totalCredit   Decimal   @default(0.0)
-  debitBalance  Decimal   @default(0.0)
-  creditBalance Decimal   @default(0.0)
-  date          DateTime  @default(now())
-  userId        Int
-  user          User      @relation(fields: [userId], references: [id])
-  invoices      Invoice[] @relation("AccountToInvoice")
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model Career {
@@ -431,6 +689,7 @@ model Career {
 
 model Billrecieve {
   id              Int           @id @default(autoincrement())
+  userId          Int?
   billNumber      String
   amount          String
   tax             String
@@ -444,10 +703,13 @@ model Billrecieve {
   paymentMethod   paymentMethod @default(cash)
   dueDate         String
   comment         String?
+
+  @@index([userId])
 }
 
 model Billpayable {
   id              Int           @id @default(autoincrement())
+  userId          Int?
   supplierName    String
   supplierAddress String
   contact         String
@@ -463,6 +725,8 @@ model Billpayable {
   tax             String
   comment         String?
   invoiceNumber   String?
+
+  @@index([userId])
 }
 
 model UploadedDocument {
@@ -475,6 +739,8 @@ model UploadedDocument {
   application   LoanApplication? @relation(fields: [applicationId], references: [id])
   user          User             @relation(fields: [userId], references: [id])
   docs          LoanDocument[]   @relation("LoanDocumentToUploadedDocument")
+  @@index([userId])
+  @@index([applicationId])
 }
 
 model LoanDocument {
@@ -531,6 +797,11 @@ model LoanApplication {
   loan             Loan               @relation(fields: [loanId], references: [id])
   user             User               @relation(fields: [userId], references: [id])
   documents        UploadedDocument[]
+  @@index([userId])
+  @@index([loanId])
+  @@index([agentId])
+  @@index([bankAccountId])
+  @@index([loanStatus, createdAt])
 }
 
 model BankDetails {
@@ -546,6 +817,7 @@ model BankDetails {
   updatedAt         DateTime          @default(now())
   user              User              @relation(fields: [userId], references: [id])
   loans             LoanApplication[]
+  @@index([userId])
 }
 
 model Insurance {
@@ -562,6 +834,8 @@ model Insurance {
   createdAt     DateTime   @default(now())
   updatedAt     DateTime   @default(now())
   user          User       @relation(fields: [userId], references: [id])
+  @@index([userId])
+  @@index([createdAt])
 }
 
 model Client {
@@ -572,6 +846,8 @@ model Client {
   updatedAt DateTime @default(now())
   agent     Agent    @relation(fields: [agentId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
+  @@index([userId])
+  @@index([agentId])
 }
 
 model Agent {
@@ -602,6 +878,7 @@ model RegisterStartup {
   user             User              @relation(fields: [userId], references: [id])
   cart             Cart[]            @relation("CartToRegisterStartup")
   subscriptions    Subscriptions[]   @relation("RegisterStartupToSubscriptions")
+  @@index([userId])
 }
 
 model RegisterServices {
@@ -616,6 +893,8 @@ model RegisterServices {
   user            User            @relation(fields: [userId], references: [id])
   cart            Cart[]          @relation("CartToRegisterServices")
   subscriptions   Subscriptions[] @relation("RegisterServicesToSubscriptions")
+  @@index([userId])
+  @@index([serviceId])
 }
 
 model ContactUs {
@@ -658,6 +937,7 @@ model Gstr1_4A {
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now())
   user              User     @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Gstr1_5A {
@@ -675,6 +955,7 @@ model Gstr1_5A {
   total_invoice_value String
   user                User            @relation(fields: [userId], references: [id])
   gstr1_5A_items      Gstr1_5A_item[]
+  @@index([userId])
 }
 
 model Gstr1_5A_item {
@@ -685,6 +966,7 @@ model Gstr1_5A_item {
   cess           String
   gstr1_5A_id    Int
   gstr1_5A       Gstr1_5A @relation(fields: [gstr1_5A_id], references: [id])
+  @@index([gstr1_5A_id])
 }
 
 model Gstr1_6A {
@@ -703,6 +985,7 @@ model Gstr1_6A {
   cess                String
   user                User            @relation(fields: [userId], references: [id])
   gstr1_6A_items      Gstr1_6A_item[]
+  @@index([userId])
 }
 
 model Gstr1_6A_item {
@@ -713,6 +996,7 @@ model Gstr1_6A_item {
   sgst             String
   gstr1_6A_id      Int
   gstr1_6A         Gstr1_6A @relation(fields: [gstr1_6A_id], references: [id])
+  @@index([gstr1_6A_id])
 }
 
 model Gstr1_7B {
@@ -731,6 +1015,7 @@ model Gstr1_7B {
   total_taxable   String
   integrated      String
   user            User   @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Gstr1_8ABCD {
@@ -746,6 +1031,7 @@ model Gstr1_8ABCD {
   state_tax     String
   cess          String
   user          User   @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Gstr1_9B {
@@ -767,6 +1053,7 @@ model Gstr1_9B {
   central_tax            String
   cess                   String
   user                   User   @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Gstr1_9B_un {
@@ -786,6 +1073,7 @@ model Gstr1_9B_un {
   central_tax_rs         String
   cess                   String
   user                   User   @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Gstr1_11A2A2 {
@@ -796,6 +1084,7 @@ model Gstr1_11A2A2 {
   supply String
   cess   String
   user   User   @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model Gstr1_11B1B2 {
@@ -811,6 +1100,7 @@ model Gstr1_11B1B2 {
   cgst          String
   sgst          String
   user          User   @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model gstr1_12HSN {
@@ -826,6 +1116,7 @@ model gstr1_12HSN {
   cgst          String
   sgst          String
   user          User   @relation(fields: [userId], references: [id])
+  @@index([userId])
 }
 
 model CountryCodeList {
@@ -929,25 +1220,46 @@ enum SubscriptionsDuration {
   yearly
 }
 
-enum LedgerType {
-  bank
-  cash
-  purchase
-  sales
-  directExpense
-  indirectExpense
-  directIncome
-  indirectIncome
-  fixedAssets
-  currentAssets
-  loansAndLiabilitieslw
-  accountsReceivable
-  accountsPayable
+enum CompanyRole {
+  OWNER
+  ADMIN
+  ACCOUNTANT
+  VIEWER
 }
 
-enum TransactionType {
-  credit
-  debit
+enum AccountNature {
+  ASSET
+  LIABILITY
+  INCOME
+  EXPENSE
+}
+
+enum ReportSectionType {
+  TRADING
+  PROFIT_AND_LOSS
+  BALANCE_SHEET
+}
+
+enum DrCr {
+  DR
+  CR
+}
+
+enum VoucherBaseType {
+  PAYMENT
+  RECEIPT
+  CONTRA
+  SALES
+  PURCHASE
+  DEBIT_NOTE
+  CREDIT_NOTE
+  JOURNAL
+}
+
+enum VoucherStatus {
+  DRAFT
+  POSTED
+  REVERSED
 }
 
 enum PartyType {

@@ -5,13 +5,16 @@
   "main": "dist/index.js",
   "scripts": {
     "generate": "prisma generate",
-    "db": "prisma db push",
+    "db": "prisma db push && npm run billshield:invariants",
+    "billshield:invariants": "prisma db execute --file prisma/sql/billshield_invariants.sql",
     "lint": "eslint ./src --fix",
     "build": "node --max-old-space-size=8192 ./node_modules/typescript/bin/tsc --build",
     "seed": "prisma db seed",
     "build:linux": "rm -rf dist && tsc --build",
     "start": "npx tsx src/index.ts",
-    "dev": "nodemon --exec \"node --max-old-space-size=4096 -r ts-node/register src/index.ts\" --watch src --ext ts"
+    "dev": "nodemon --exec \"node --max-old-space-size=4096 -r ts-node/register/transpile-only src/index.ts\" --watch src --watch .env --ext ts,env",
+    "dev:start": "bash ./dev_start.sh",
+    "dev:stop": "bash ./dev_stop.sh"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -36,7 +39,7 @@
     "cheerio": "^1.1.0",
     "cloudinary": "^1.41.3",
     "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
+    "cors": "^2.8.6",
     "decimal.js": "^10.4.3",
     "dotenv": "^16.6.1",
     "emailjs": "^4.0.3",

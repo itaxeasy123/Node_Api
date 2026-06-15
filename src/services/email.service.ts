@@ -1,38 +1,38 @@
 
+
 import nodemailer, { Transporter, SendMailOptions } from "nodemailer";
 
 export default class EmailService {
   private static transporter: Transporter | null = null;
 
-  // Initialize SMTP transporter (GoDaddy)
+  // Initialize SMTP transporter (GoDaddy - OTP Mail)
   private static async initTransporter() {
     if (this.transporter) return;
 
-    const user = process.env.OPT_EMAIL;
-    const pass = process.env.OTP_PASS;
+    const user = process.env.OTP_EMAIL;   // ✅ FIXED
+    const pass = process.env.OTP_PASS;    // ✅ CORRECT
 
     if (!user || !pass) {
-      throw new Error("Email credentials missing in .env");
+      throw new Error("OTP Email credentials missing in .env");
     }
 
     const transporter = nodemailer.createTransport({
       host: "smtpout.secureserver.net",
-      port: 465,          // ✅ GoDaddy SSL port
-      secure: true,       // ✅ SSL enabled
+      port: 465,
+      secure: true,
       auth: {
-        user,             // info@itaxeasy.com
-        pass,             // NEW password
+        user,
+        pass,
       },
     });
 
-    // Verify SMTP login
     await transporter.verify();
-    console.log("✅ Email transporter verified (GoDaddy SMTP)");
+    console.log("✅ OTP Email transporter verified (GoDaddy)");
 
     this.transporter = transporter;
   }
 
-  // Send email (OTP)
+  // Send OTP Mail
   public static async sendMail(
     to: string,
     subject: string,
@@ -42,7 +42,7 @@ export default class EmailService {
       await this.initTransporter();
 
       const mailOptions: SendMailOptions = {
-        from: process.env.OPT_EMAIL, // ✅ MUST be same as SMTP user
+        from: process.env.OTP_EMAIL, // ✅ FIXED
         to,
         subject,
         text: body,
@@ -50,9 +50,12 @@ export default class EmailService {
 
       await this.transporter!.sendMail(mailOptions);
 
+      console.log("✅ OTP Email Sent Successfully");
+
       return { success: true, message: "Email sent successfully" };
+
     } catch (error) {
-      console.error("❌ Email sending failed:", error);
+      console.error("❌ OTP Email sending failed:", error);
       return { success: false, message: "Email sending failed" };
     }
   }

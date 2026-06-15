@@ -11,7 +11,8 @@ billpayablerouter.post("/create",verifyToken,Accountscontroller.Payablebill)
 
 billpayablerouter.get("/getOne/:id",verifyToken,Accountscontroller.getonepayablebill)
 
-billpayablerouter.get("/getAll",verifyToken,adminCheck,Accountscontroller.getallpayablebill)
+// bills are user-scoped now (userId filter in the controller) — no admin gate
+billpayablerouter.get("/getAll",verifyToken,Accountscontroller.getallpayablebill)
 
 billpayablerouter.post("/update/:id",verifyToken,Accountscontroller.updatepayablebill)
 

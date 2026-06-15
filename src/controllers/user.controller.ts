@@ -1,14 +1,10 @@
 import { Request, Response } from "express";
 import { prisma } from "..";
-import {
-  PHONE_NUMBER_RGX,
-  generateOTP,
-  validateEmail,
-  validatePhone,
-} from "../lib/util";
+import { PHONE_NUMBER_RGX, generateOTP, validateEmail, validatePhone} from "../lib/util";
 import bcrypt from "bcrypt";
 import EmailService from "../services/email.service";
 import TokenService from "../services/token.service";
+import AuthService, { REFRESH_COOKIE } from "../services/auth.service";
 import { UserGender, UserType } from "@prisma/client";
 import { ZodError, z } from "zod";
 import { uploadToCloudinary } from "../config/cloudinaryUploader";
@@ -95,11 +91,16 @@ export default class UserController {
       `If you did not request this, please ignore this email.\n\n` +
       `Regards,\nItaxeasy\n`;
 
-    // Send email with OTP
-    await EmailService.sendMail(email, email_subject, email_message);
+    // Send email/SMS in the background so the HTTP response isn't blocked
+    // on slow SMTP/SMS providers (the app times out after a few seconds).
+    EmailService.sendMail(email, email_subject, email_message).catch((err) =>
+      console.error("Failed to send OTP email:", err)
+    );
     // MobileService expects a number — only send if mobile_number is present
     if (mobile_number) {
-      await MobileService.sendotp(Number(mobile_number), otp);
+      MobileService.sendotp(Number(mobile_number), otp).catch((err) =>
+        console.error("Failed to send OTP SMS:", err)
+      );
     }
 
     // Return OTP key
@@ -236,6 +237,9 @@ export default class UserController {
       // Hash password
       const hashedPassword = await UserController.hashPassword(password);
 
+      // In dev mode, auto-verify the account and skip OTP email entirely.
+      const isDev = process.env.APP_ENV === "dev";
+
       // Upsert user with unverified status
       const user = await prisma.user.upsert({
         where: { email },
@@ -250,7 +254,7 @@ export default class UserController {
           pin,
           phone,
           password: hashedPassword,
-          verified: false, // Keep user unverified during signup/update
+          verified: isDev, // dev: auto-verified; prod: stay unverified until OTP
         },
         create: {
           firstName,
@@ -264,9 +268,18 @@ export default class UserController {
           email,
           phone,
           password: hashedPassword,
-          verified: false, // Mark user as unverified
+          verified: isDev, // dev: auto-verified; prod: stay unverified until OTP
         },
       });
+
+      // Dev mode: no OTP mail, account already verified — let the client log in directly.
+      if (isDev) {
+        return res.status(200).send({
+          success: true,
+          message: "Account created and verified (dev mode). You can log in now.",
+          data: { verified: true, otp_key: null },
+        });
+      }
 
       // Generate and send OTP (passing phone as string)
       const otp_key = await UserController.sendOtp(email, user.id, user.phone);
@@ -276,7 +289,7 @@ export default class UserController {
         message:
           `An OTP has been sent to your email "${email}". ` +
           `Please verify your account using the OTP.`,
-        data: { otp_key },
+        data: { otp_key, verified: false },
       });
     } catch (e) {
       console.error(e);
@@ -411,19 +424,13 @@ export default class UserController {
       }
       console.log(user)
       // Generate token with user data and role flags (isAdmin, isSuperadmin)
-      const token = TokenService.generateToken(user);
+      const token = TokenService.generateAccessToken(user);
 
-      // Set token as a secure, httpOnly cookie for browser clients
-      res.cookie('authToken', token, {
-        httpOnly: true,// Prevents JavaScript from accessing the cookie
-        secure: process.env.NODE_ENV === 'production', // Ensures cookie is sent over HTTPS only in production
-
-        maxAge: 24 * 60 * 60 * 1000, // Cookie expiration time (1 day)
-         sameSite: "lax",   //  VERY IMPORTANT
-          path: "/",
-       // sameSite: 'strict',   // Restricts cookie to same-site requests
-      });
-
+      // Long-lived, DB-backed refresh token stored in an httpOnly cookie.
+      const refreshToken = await AuthService.issueRefreshToken(user.id);
+      AuthService.setRefreshCookie(res, refreshToken);
+      // Short-lived httpOnly access cookie for SSR/server routes.
+      AuthService.setAccessCookie(res, token);
       // Exclude sensitive data (e.g., password) from the user object sent in the body
       const { password: _, ...userWithoutPassword } = user;
 
@@ -441,6 +448,101 @@ export default class UserController {
         success: false,
         message: "Internal server error",
       });
+    }
+  }
+
+  // Exchange a valid refresh-token cookie for a new access token.
+  // Rotates the refresh token and detects reuse of an already-rotated token.
+  static async refresh(req: Request, res: Response) {
+    try {
+      const rawToken = req.cookies?.[REFRESH_COOKIE];
+      if (!rawToken) {
+        return res
+          .status(401)
+          .json({ success: false, message: "No refresh token" });
+      }
+
+      const payload = TokenService.verifyRefreshToken(rawToken);
+      if (!payload) {
+        AuthService.clearRefreshCookie(res);
+        return res
+          .status(401)
+          .json({ success: false, message: "Invalid refresh token" });
+      }
+
+      const stored = await prisma.refreshToken.findUnique({
+        where: { id: payload.jti },
+      });
+
+      // Token unknown, expired, or already used → treat as invalid.
+      if (!stored || stored.expiresAt < new Date()) {
+        AuthService.clearRefreshCookie(res);
+        return res
+          .status(401)
+          .json({ success: false, message: "Refresh token expired" });
+      }
+
+      // Reuse of a revoked (already-rotated) token → likely theft. Kill all sessions.
+      if (stored.revoked) {
+        await AuthService.revokeAllForUser(payload.id);
+        AuthService.clearRefreshCookie(res);
+        return res.status(401).json({
+          success: false,
+          message: "Refresh token reuse detected. Please log in again.",
+        });
+      }
+
+      const user = await prisma.user.findUnique({ where: { id: payload.id } });
+      if (!user) {
+        AuthService.clearRefreshCookie(res);
+        return res
+          .status(401)
+          .json({ success: false, message: "User not found" });
+      }
+
+      // Rotate the refresh token and issue a new access token.
+      const newRefresh = await AuthService.rotateRefreshToken(
+        payload.jti,
+        user.id
+      );
+      AuthService.setRefreshCookie(res, newRefresh);
+
+      const accessToken = TokenService.generateAccessToken(user);
+      AuthService.setAccessCookie(res, accessToken);
+      const { password: _pw, ...userWithoutPassword } = user;
+
+      return res.status(200).json({
+        success: true,
+        data: { token: accessToken, user: userWithoutPassword },
+      });
+    } catch (error) {
+      console.error("Refresh error:", error);
+      return res
+        .status(500)
+        .json({ success: false, message: "Internal server error" });
+    }
+  }
+
+  // Revoke the current refresh token and clear the cookie.
+  static async logout(req: Request, res: Response) {
+    try {
+      const rawToken = req.cookies?.[REFRESH_COOKIE];
+      if (rawToken) {
+        const payload = TokenService.verifyRefreshToken(rawToken);
+        if (payload?.jti) {
+          await AuthService.revokeToken(payload.jti);
+        }
+      }
+      AuthService.clearRefreshCookie(res);
+      AuthService.clearAccessCookie(res);
+      return res.status(200).json({ success: true, message: "Logged out" });
+    } catch (error) {
+      console.error("Logout error:", error);
+      AuthService.clearRefreshCookie(res);
+      AuthService.clearAccessCookie(res);
+      return res
+        .status(200)
+        .json({ success: true, message: "Logged out" });
     }
   }
 

@@ -51,6 +51,10 @@ userRouter.get(
 
 userRouter.post("/login", UserController.login);
 
+// Access/refresh token lifecycle
+userRouter.post("/refresh", UserController.refresh);
+userRouter.post("/logout", UserController.logout);
+
 userRouter.get("/gettoken", UserController.gettoken);
 
 userRouter.post("/changeusertype", verifyToken, UserController.changeusertype);

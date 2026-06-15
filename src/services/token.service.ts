@@ -106,48 +106,80 @@ import jwt from "jsonwebtoken";
 import { UserData } from "../types/user-data";
 import { Request } from "express";
 
-export default class TokenService {
+// Token lifetimes (env-overridable).
+const ACCESS_TTL = process.env.ACCESS_TOKEN_TTL || "15m";
+const REFRESH_TTL_DAYS = Number(process.env.REFRESH_TOKEN_TTL_DAYS || 7);
 
-  // ✅ FIX 1: Header + Cookie (authToken) support
+const accessSecret = () => process.env.JWT_KEY as string;
+const refreshSecret = () =>
+  (process.env.JWT_REFRESH_KEY || process.env.JWT_KEY) as string;
+
+export interface RefreshPayload {
+  id: number;
+  jti: string; // matches RefreshToken.id in the DB
+}
+
+export default class TokenService {
+  static REFRESH_TTL_DAYS = REFRESH_TTL_DAYS;
+
+  // Pull a bearer token from the Authorization header (the access token is now
+  // sent in-memory via the header). Falls back to the legacy authToken cookie.
   static getTokenFromAuthHeader(req: Request): string | undefined {
     const authorization = req.headers.authorization;
-
-
     if (authorization?.startsWith("Bearer ")) {
       return authorization.split(" ")[1];
     }
-
-    // 🔥 FIX: correct cookie name
     return req.cookies?.authToken;
   }
 
-  // ✅ FIX 2: payload key name (userType)
-  static generateToken(user: UserData) {
-    const tokenPayload = {
-      email: user.email,
+  // ---- Access token (short-lived) ----
+  static generateAccessToken(
+    user: UserData | { id: number; email: string; userType: any }
+  ) {
+    const payload = {
       id: user.id,
-      userType: user.userType, // 🔥 FIXED (was Usertype)
+      email: user.email,
+      userType: user.userType,
     };
-
-    return jwt.sign(tokenPayload, process.env.JWT_KEY as string, {
+    return jwt.sign(payload, accessSecret(), {
       issuer: "iTaxEasy",
-      expiresIn: "24h",
+      expiresIn: ACCESS_TTL,
     });
+  }
+
+  // Backwards-compatible alias.
+  static generateToken(user: UserData) {
+    return TokenService.generateAccessToken(user);
+  }
+
+  // ---- Refresh token (long-lived, DB-backed via jti) ----
+  static generateRefreshToken(payload: RefreshPayload) {
+    return jwt.sign(payload, refreshSecret(), {
+      issuer: "iTaxEasy",
+      expiresIn: `${REFRESH_TTL_DAYS}d`,
+    });
+  }
+
+  static verifyRefreshToken(token: string): RefreshPayload | null {
+    try {
+      return jwt.verify(token, refreshSecret()) as RefreshPayload;
+    } catch {
+      return null;
+    }
   }
 
   static decodeToken(token: string): UserData {
     return jwt.decode(token) as UserData;
   }
 
-  // ✅ FIX 3: keep verifyToken SAFE
   static verifyToken(token: string): UserData {
-    return jwt.verify(token, process.env.JWT_KEY as string) as UserData;
+    return jwt.verify(token, accessSecret()) as UserData;
   }
 
-  // ✅ FIX 4: stable method for middleware
+  // Used by the auth middleware to validate the ACCESS token.
   static verifyAndDecode(token: string): UserData | null {
     try {
-      jwt.verify(token, process.env.JWT_KEY as string);
+      jwt.verify(token, accessSecret());
       return jwt.decode(token) as UserData;
     } catch {
       return null;

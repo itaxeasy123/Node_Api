@@ -17,6 +17,7 @@ export class Accountscontroller {
 
       const billpayable = await prisma.billpayable.create({
         data: {
+            userId: (req as any).user?.id,
             supplierName,
             supplierAddress,
              contact,
@@ -71,8 +72,9 @@ export class Accountscontroller {
 
     static async getallpayablebill (req: Request, res: Response){
         try {
-
-            const allbill = await prisma.billpayable.findMany({})
+            // user-scoped: each user sees only their own bills
+            const userId = (req as any).user?.id;
+            const allbill = await prisma.billpayable.findMany({ where: { userId } })
 
             if(!allbill){
                 return res.status(404).send({ success: false, message: 'Bill Post Not Found' });
@@ -191,6 +193,7 @@ export class Accountscontroller {
             
               const billpayable = await prisma.billrecieve.create({
                 data: {
+                    userId: (req as any).user?.id,
                     billNumber,
                     amount, 
                     tax, 
@@ -244,8 +247,9 @@ export class Accountscontroller {
 
     static async getallrecivablebill (req: Request, res: Response){
         try {
-
-            const allbill = await prisma.billrecieve.findMany({})
+            // user-scoped: each user sees only their own bills
+            const userId = (req as any).user?.id;
+            const allbill = await prisma.billrecieve.findMany({ where: { userId } })
 
             if(!allbill){
                 return res.status(404).send({ success: false, message: 'Bill Post Not Found' });

@@ -417,17 +417,17 @@ export default class GSTR1Controller {
 
             await prisma.gstr1_5A.delete({where:{id:+id}})
 
-            const remainingItems = await prisma.gstr1_5A.findMany();
-            for (let i = 0; i < remainingItems.length; i++) {
-              await prisma.gstr1_5A.update({
-                where: {
-                  id: remainingItems[i].id
-                },
-                data: {
-                  sr_no: i + 1
-                }
-              });
-            }
+            const remainingItems = await prisma.gstr1_5A.findMany({ orderBy: { id: "asc" } });
+            // Renumber sr_no in one batched transaction (single round-trip,
+            // atomic) instead of an UPDATE per row in a loop.
+            await prisma.$transaction(
+              remainingItems.map((item, i) =>
+                prisma.gstr1_5A.update({
+                  where: { id: item.id },
+                  data: { sr_no: i + 1 },
+                })
+              )
+            );
 
             return res.status(200).json({success:true,message:"record deleted "})
             
@@ -620,17 +620,17 @@ export default class GSTR1Controller {
 
             await prisma.gstr1_6A.delete({where:{id:+id}})
 
-            const remainingItems = await prisma.gstr1_6A.findMany();
-            for (let i = 0; i < remainingItems.length; i++) {
-              await prisma.gstr1_6A.update({
-                where: {
-                  id: remainingItems[i].id
-                },
-                data: {
-                  sr_no: i + 1
-                }
-              });
-            }
+            const remainingItems = await prisma.gstr1_6A.findMany({ orderBy: { id: "asc" } });
+            // Renumber sr_no in one batched transaction (single round-trip,
+            // atomic) instead of an UPDATE per row in a loop.
+            await prisma.$transaction(
+              remainingItems.map((item, i) =>
+                prisma.gstr1_6A.update({
+                  where: { id: item.id },
+                  data: { sr_no: i + 1 },
+                })
+              )
+            );
 
             return res.status(200).json({success:true,message:"record deleted Successfully !!"}); 
             
@@ -798,17 +798,17 @@ export default class GSTR1Controller {
 
             await prisma.gstr1_7B.delete({where:{id:+id}})
 
-            const remainingItems = await prisma.gstr1_7B.findMany();
-            for (let i = 0; i < remainingItems.length; i++) {
-              await prisma.gstr1_7B.update({
-                where: {
-                  id: remainingItems[i].id
-                },
-                data: {
-                  sr_no: i + 1
-                }
-              });
-            }
+            const remainingItems = await prisma.gstr1_7B.findMany({ orderBy: { id: "asc" } });
+            // Renumber sr_no in one batched transaction (single round-trip,
+            // atomic) instead of an UPDATE per row in a loop.
+            await prisma.$transaction(
+              remainingItems.map((item, i) =>
+                prisma.gstr1_7B.update({
+                  where: { id: item.id },
+                  data: { sr_no: i + 1 },
+                })
+              )
+            );
 
             return res.status(200).json({success:true,message:"record deleted Successfully !!"}); 
             
@@ -1033,17 +1033,17 @@ export default class GSTR1Controller {
 
             await prisma.gstr1_9B.delete({where:{id:+id}})
 
-            const remainingItems = await prisma.gstr1_9B.findMany();
-            for (let i = 0; i < remainingItems.length; i++) {
-              await prisma.gstr1_9B.update({
-                where: {
-                  id: remainingItems[i].id
-                },
-                data: {
-                  sr_no: i + 1
-                }
-              });
-            }
+            const remainingItems = await prisma.gstr1_9B.findMany({ orderBy: { id: "asc" } });
+            // Renumber sr_no in one batched transaction (single round-trip,
+            // atomic) instead of an UPDATE per row in a loop.
+            await prisma.$transaction(
+              remainingItems.map((item, i) =>
+                prisma.gstr1_9B.update({
+                  where: { id: item.id },
+                  data: { sr_no: i + 1 },
+                })
+              )
+            );
 
             return res.status(200).json({success:true,message:"record deleted Successfully !!"}); 
             

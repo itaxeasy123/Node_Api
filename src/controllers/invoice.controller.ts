@@ -3,7 +3,6 @@ import {
   Prisma,
   Invoice,
   Item,
-  LedgerType,
   Party,
   PartyType,
   InvoiceType,
@@ -429,12 +428,6 @@ class InvoiceController {
     try {
       const { id: userId } = req.user!;
 
-      const date = new Date();
-
-      const currentYear = date.getFullYear();
-      const currentMonth = date.getMonth();
-
-      // Extract data for creating the party and ledger
       const {
         partyName,
         type,
@@ -449,12 +442,8 @@ class InvoiceController {
         bankAccountNumber,
         bankIfsc,
         bankBranch,
-        openingBalance,
-        year = currentYear,
-        month = currentMonth,
       } = req.body;
 
-      // Create the Party and its associated Ledger
       const party = await prisma.party.create({
         data: {
           partyName,
@@ -471,22 +460,6 @@ class InvoiceController {
           bankIfsc,
           bankBranch,
           userId,
-          ledgers: {
-            create: {
-              ledgerName: partyName,
-              ledgerType:
-                type === PartyType.customer
-                  ? LedgerType.accountsReceivable
-                  : LedgerType.accountsPayable,
-              openingBalance,
-              year,
-              month,
-              userId,
-            },
-          },
-        },
-        include: {
-          ledgers: true,
         },
       });
 
@@ -520,7 +493,6 @@ static async updateParty(req: Request, res: Response) {
       });
     }
 
-    // Extract data for updating the party and ledger
     const {
       partyName,
       type,
@@ -535,9 +507,6 @@ static async updateParty(req: Request, res: Response) {
       bankAccountNumber,
       bankIfsc,
       bankBranch,
-      openingBalance,
-      year,
-      month,
     } = req.body;
 
     // First verify the party exists and belongs to this user
@@ -545,9 +514,6 @@ static async updateParty(req: Request, res: Response) {
       where: {
         id: partyId,
         userId
-      },
-      include: {
-        ledgers: true
       }
     });
 
@@ -579,48 +545,12 @@ static async updateParty(req: Request, res: Response) {
         bankAccountNumber,
         bankIfsc,
         bankBranch
-      },
-      include: {
-        ledgers: true
       }
     });
 
-    // If there's a ledger associated and opening balance/ledger data should be updated
-    if (existingParty.ledgers.length > 0 && openingBalance !== undefined) {
-      const ledgerId = existingParty.ledgers[0].id;
-      
-      // Update the ledger type if party type changed
-      const ledgerType = type === PartyType.customer
-        ? LedgerType.accountsReceivable
-        : LedgerType.accountsPayable;
-        
-      await prisma.ledger.update({
-        where: {
-          id: ledgerId
-        },
-        data: {
-          ledgerName: partyName, // Update ledger name to match party name
-          ledgerType,
-          openingBalance,
-          ...(year && { year }),
-          ...(month !== undefined && { month })
-        }
-      });
-    }
-
-    // Get the updated party with fresh ledger data
-    const updatedPartyWithLedger = await prisma.party.findUnique({
-      where: {
-        id: partyId
-      },
-      include: {
-        ledgers: true
-      }
-    });
-
-    return res.status(200).json({ 
-      success: true, 
-      party: updatedPartyWithLedger 
+    return res.status(200).json({
+      success: true,
+      party: updatedParty
     });
     
   } catch (error) {
@@ -751,7 +681,21 @@ static async updateParty(req: Request, res: Response) {
   static async updateItem(req: Request, res: Response): Promise<void> {
     try {
       const itemId = req.params.id;
-      const { itemName } = req.body;
+      const {
+        itemName,
+        unit,
+        price,
+        purchasePrice,
+        openingStock,
+        closingStock,
+        hsnCode,
+        description,
+        cgst,
+        sgst,
+        igst,
+        utgst,
+        taxExempted,
+      } = req.body;
       const { id: userId } = req.user!;
       const item = await prisma.item.findFirst({
         where: { id: itemId, userId },
@@ -761,11 +705,23 @@ static async updateParty(req: Request, res: Response) {
         res.status(200).json({ success: false, message: "Item not found" });
         return;
       }
-      // Update the item
+      // Update only the fields that were sent
       const updatedItem: Item | null = await prisma.item.update({
         where: { id: itemId },
         data: {
-          itemName,
+          ...(itemName !== undefined && { itemName }),
+          ...(unit !== undefined && { unit }),
+          ...(price !== undefined && { price }),
+          ...(purchasePrice !== undefined && { purchasePrice }),
+          ...(openingStock !== undefined && { openingStock }),
+          ...(closingStock !== undefined && { closingStock }),
+          ...(hsnCode !== undefined && { hsnCode }),
+          ...(description !== undefined && { description }),
+          ...(cgst !== undefined && { cgst }),
+          ...(sgst !== undefined && { sgst }),
+          ...(igst !== undefined && { igst }),
+          ...(utgst !== undefined && { utgst }),
+          ...(taxExempted !== undefined && { taxExempted }),
         },
       });
       console.log("updateItem");
@@ -855,9 +811,6 @@ static async updateParty(req: Request, res: Response) {
       // Get the party by ID
       const party: Party | null = await prisma.party.findFirst({
         where: { id: partyId, userId },
-        include: {
-          ledgers: true,
-        },
       });
 
       if (!party) {

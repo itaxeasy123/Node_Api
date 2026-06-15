@@ -6,6 +6,8 @@ declare global {
       user?: UserData;
       isAdmin?: boolean;
       isSuperAdmin?: boolean;
+      companyId?: string;
+      companyRole?: string;
     }
   }
 }

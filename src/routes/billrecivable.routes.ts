@@ -9,7 +9,8 @@ billrecievablerouter.post("/create",verifyToken,Accountscontroller.createbillrec
 
 billrecievablerouter.get("/getOne/:id",verifyToken,Accountscontroller.getonerecievablebill)
 
-billrecievablerouter.get("/getAll",verifyToken,adminCheck,Accountscontroller.getallrecivablebill)
+// bills are user-scoped now (userId filter in the controller) — no admin gate
+billrecievablerouter.get("/getAll",verifyToken,Accountscontroller.getallrecivablebill)
 
  billrecievablerouter.post("/update/:id",verifyToken,Accountscontroller.updaterecivalebill)
 

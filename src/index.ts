@@ -1,5 +1,156 @@
 
-import express, {Request, Response } from "express";
+// import express, { Request, Response } from "express";
+// import { rateLimit } from "express-rate-limit";
+// import { PrismaClient } from "@prisma/client";
+// import cors from "cors";
+// import helmet from "helmet";
+// import cookieParser from "cookie-parser";
+// import { config } from "dotenv";
+// import path from "path";
+// import routes from "./routes";
+// import debugRoutes from "./routes/debug.routes";
+
+// /* =======================
+//    ENV CONFIG
+// ======================= */
+// config({
+//   path: path.resolve(__dirname, "../.env"),
+// });
+
+// const PORT = Number(process.env.PORT) || 8000;
+
+// /* =======================
+//    APP + DB
+// ======================= */
+// export const prisma = new PrismaClient();
+// const app = express();
+
+// /* =======================
+//    TRUST PROXY
+// ======================= */
+// app.set("trust proxy", false);
+
+// /* =======================
+//    BODY PARSERS
+// ======================= */
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
+// /* =======================
+//    🔥 FINAL CORS (NO ERROR)
+// ======================= */
+
+// const allowedOrigins = [
+//   "http://localhost:3001",
+//   "http://localhost:3000",
+//   "http://localhost:5173",
+// ];
+
+// app.use(
+//   cors({
+//     origin: (origin, callback) => {
+//       if (!origin) return callback(null, true); // Postman / server
+
+//       if (allowedOrigins.includes(origin)) {
+//         return callback(null, true);
+//       }
+
+//       console.warn("❌ Blocked by CORS:", origin);
+//       return callback(null, false);
+//     },
+//     credentials: true,
+//     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   })
+// );
+
+// // ✅ IMPORTANT (preflight fix)
+// app.options("*", cors());
+
+// /* =======================
+//    SECURITY (FIXED)
+// ======================= */
+// app.use(
+//   helmet({
+//     crossOriginResourcePolicy: false,
+//   })
+// );
+
+// app.use(cookieParser());
+
+// /* =======================
+//    RATE LIMIT
+// ======================= */
+// app.use(
+//   rateLimit({
+//     windowMs: 15 * 60 * 1000,
+//     max: 600,
+//     standardHeaders: true,
+//     legacyHeaders: false,
+//   })
+// );
+
+// /* =======================
+//    STATIC FILES
+// ======================= */
+// app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// /* =======================
+//    REQUEST LOGGER
+// ======================= */
+// app.use((req, res, next) => {
+//   const start = Date.now();
+//   res.on("finish", () => {
+//     console.log(
+//       `[${req.method}] ${req.url} → ${res.statusCode} (${Date.now() - start}ms)`
+//     );
+//   });
+//   next();
+// });
+
+// /* =======================
+//    DEBUG ROUTES
+// ======================= */
+// app.use("/debug", debugRoutes);
+
+// /* =======================
+//    HEALTH CHECK
+// ======================= */
+// app.get("/health", (_req, res) => {
+//   res.json({ status: "OK" });
+// });
+
+// app.get("/", (_req, res) => {
+//   res.json({ message: "Up and running" });
+// });
+
+// /* =======================
+//    API ROUTES
+// ======================= */
+// app.use("/api", routes);
+
+// /* =======================
+//    GLOBAL ERROR HANDLER
+// ======================= */
+// app.use(
+//   (err: Error, _req: Request, res: Response, _next: Function) => {
+//     console.error("❌ ERROR:", err.message);
+
+//     return res.status(500).json({
+//       success: false,
+//       message: err.message || "Internal Server Error",
+//     });
+//   }
+// );
+
+// /* =======================
+//    SERVER START
+// ======================= */
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server running at http://localhost:${PORT}`);
+// });
+
+import express, { Request, Response } from "express";
 import { rateLimit } from "express-rate-limit";
 import { PrismaClient } from "@prisma/client";
 import cors from "cors";
@@ -7,10 +158,8 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import { config } from "dotenv";
 import path from "path";
-// import router from "./routes";
-import debugRoutes from "./routes/debug.routes";
 import routes from "./routes";
-
+import debugRoutes from "./routes/debug.routes";
 
 /* =======================
    ENV CONFIG
@@ -30,7 +179,6 @@ const app = express();
 /* =======================
    TRUST PROXY
 ======================= */
-    // app.set("trust proxy", true);
 app.set("trust proxy", false);
 
 /* =======================
@@ -40,16 +188,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /* =======================
-   CORS (FIXED)
+   CORS
 ======================= */
 const allowedOrigins = [
-  process.env.CLIENT_URL,
-  "http://localhost:3000",
   "http://localhost:3001",
-  "https://itaxeasy.com",
-  "https://itaxeasy-chi.vercel.app",
-  "https://itax-ssr.vercel.app",
-].filter(Boolean);
+  "http://localhost:3000",
+  "http://localhost:5173",
+  // Expo (Metro web + dev client)
+  "http://localhost:8081",
+  "http://192.168.7.15:8081",
+];
+
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -59,21 +208,26 @@ app.use(
         return callback(null, true);
       }
 
-      return callback(
-        new Error(`CORS blocked for origin: ${origin}`)
-      );
+      console.warn("❌ Blocked by CORS:", origin);
+      return callback(null, false);
     },
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-app.use(cookieParser());
 app.options("*", cors());
 
 /* =======================
    SECURITY
 ======================= */
-app.use(helmet());
+app.use(
+  helmet({
+    crossOriginResourcePolicy: false,
+  })
+);
+
 app.use(cookieParser());
 
 /* =======================
@@ -89,10 +243,15 @@ app.use(
 );
 
 /* =======================
-   STATIC FILES
+   STATIC FILES (FINAL FIX)
 ======================= */
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
+app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
+
+app.use(
+  "/images",
+  express.static(path.join(process.cwd(), "public/images"))
+);
 /* =======================
    REQUEST LOGGER
 ======================= */
@@ -107,40 +266,33 @@ app.use((req, res, next) => {
 });
 
 /* =======================
-   GST MODE LOG (IMPORTANT)
+   DEBUG ROUTES
 ======================= */
 app.use("/debug", debugRoutes);
 
-console.log("✅ GST_MODE:", process.env.GST_MODE);
-
-
-// Health
+/* =======================
+   HEALTH CHECK
+======================= */
 app.get("/health", (_req, res) => {
   res.json({ status: "OK" });
 });
 
-/* =======================
-   ROUTES (FIXED)
-======================= */
-// app.use("/", router);
-// app.use("/api", router);
-app.use("/api", routes);
-/* =======================
-   HEALTH CHECK
-======================= */
 app.get("/", (_req, res) => {
   res.json({ message: "Up and running" });
 });
 
 /* =======================
-   GLOBAL ERROR HANDLER
+   API ROUTES
 ======================= */
+app.use("/api", routes);
+
 /* =======================
-   GLOBAL ERROR HANDLER (FIXED)
+   GLOBAL ERROR HANDLER
 ======================= */
 app.use(
   (err: Error, _req: Request, res: Response, _next: Function) => {
     console.error("❌ ERROR:", err.message);
+
     return res.status(500).json({
       success: false,
       message: err.message || "Internal Server Error",
@@ -148,12 +300,9 @@ app.use(
   }
 );
 
-
 /* =======================
    SERVER START
 ======================= */
 app.listen(PORT, () => {
   console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
-
-

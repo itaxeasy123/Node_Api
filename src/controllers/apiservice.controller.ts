@@ -21,7 +21,21 @@ export default class ApiServiceController {
   }
   static getallapis = async (req: Request, res: Response) => {
     try {
-      const apis = await prisma.apiService.findMany();
+      // List view needs only the light catalog fields; the heavy Json columns
+      // (endpoint, bodyParams, response, responseJSON) are not read from this
+      // endpoint, so we omit them to keep the payload small.
+      const apis = await prisma.apiService.findMany({
+        select: {
+          id: true,
+          title: true,
+          overview: true,
+          price: true,
+          upcoming: true,
+          category: true,
+          createdAt: true,
+          updatedAt: true,
+        },
+      });
       return res.status(200).json({
         success: true,
         data: apis,
