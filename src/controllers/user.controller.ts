@@ -344,7 +344,7 @@ export default class UserController {
       }
 
       // Mark the user as verified
-      await prisma.user.update({
+      const verifiedUser = await prisma.user.update({
         where: { id: user.id },
         data: { verified: true },
       });
@@ -352,9 +352,19 @@ export default class UserController {
       // Delete the OTP record (optional, but good for cleanup/preventing reuse)
       await prisma.otp.delete({ where: { id: otpRecord.id } });
 
+      // Issue a session on successful verification (same as login) so the
+      // client can auto-login. Signup-origin clients ignore the token and send
+      // the user to /login; login-origin clients use it to land logged-in.
+      const token = TokenService.generateAccessToken(verifiedUser);
+      const refreshToken = await AuthService.issueRefreshToken(verifiedUser.id);
+      AuthService.setRefreshCookie(res, refreshToken);
+      AuthService.setAccessCookie(res, token);
+      const { password: _v, ...userWithoutPassword } = verifiedUser;
+
       return res.status(200).send({
         success: true,
         message: "Account successfully verified. Your account is now active.",
+        data: { user: userWithoutPassword, token },
       });
     } catch (e) {
       console.error(e);
