@@ -179,7 +179,10 @@ const app = express();
 /* =======================
    TRUST PROXY
 ======================= */
-app.set("trust proxy", false);
+// API runs behind one reverse proxy (nginx) in prod, so trust the first hop.
+// This lets express-rate-limit read the real client IP from X-Forwarded-For
+// instead of throwing ERR_ERL_UNEXPECTED_X_FORWARDED_FOR.
+app.set("trust proxy", 1);
 
 /* =======================
    BODY PARSERS

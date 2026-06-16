@@ -237,8 +237,10 @@ export default class UserController {
       // Hash password
       const hashedPassword = await UserController.hashPassword(password);
 
-      // In dev mode, auto-verify the account and skip OTP email entirely.
-      const isDev = process.env.APP_ENV === "dev";
+      // In non-production, auto-verify the account and skip OTP email entirely.
+      // Production (NODE_ENV=production) always sends an OTP and stays unverified
+      // until the user verifies. (Single source of truth: NODE_ENV.)
+      const isDev = process.env.NODE_ENV !== "production";
 
       // Upsert user with unverified status
       const user = await prisma.user.upsert({
@@ -406,15 +408,8 @@ export default class UserController {
         });
       }
 
-      // Check if user not  is verified
-      if (!user.verified) {
-        return res.status(403).json({
-          success: false,
-          message: "User is not verified",
-        });
-      }
-
-      // Compare passwords
+      // Verify the password FIRST — only act on the account once credentials
+      // are proven correct (so we never send an OTP for a wrong password).
       const authorized = await bcrypt.compare(password, user.password);
       if (!authorized) {
         return res.status(401).json({
@@ -422,7 +417,22 @@ export default class UserController {
           message: "Invalid credentials",
         });
       }
-      console.log(user)
+
+      // Unverified account with valid credentials → send a fresh OTP and ask
+      // the client to verify, instead of a dead-end 403. The client should show
+      // the OTP screen (data.otp_key), call /verify-otp, then log in again.
+      if (!user.verified) {
+        await prisma.otp.deleteMany({ where: { userId: user.id } });
+        const otp_key = await UserController.sendOtp(email, user.id, user.phone);
+        return res.status(403).json({
+          success: false,
+          needsVerification: true,
+          message:
+            "Your account is not verified. We've sent a new OTP to your email — please verify to continue.",
+          data: { otp_key, email, verified: false },
+        });
+      }
+
       // Generate token with user data and role flags (isAdmin, isSuperadmin)
       const token = TokenService.generateAccessToken(user);
 

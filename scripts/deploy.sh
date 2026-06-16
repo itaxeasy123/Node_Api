@@ -49,11 +49,24 @@ build_and_start() {
     npm install --no-audit --no-fund
   fi
 
-  # Generate the Prisma client (needed at runtime). We deliberately do NOT run
-  # `prisma db push` / migrations here — schema changes against the production
-  # DB must be applied manually (npm run db) to avoid accidental data loss.
+  # Generate the Prisma client (needed at runtime).
   echo "==> prisma generate"
   npm run generate
+
+  # Sync the DB schema to match the code. The prod DB is managed with `db push`
+  # (no _prisma_migrations history), so db push — NOT `migrate deploy` — is the
+  # correct tool. Without --accept-data-loss, db push applies only SAFE additive
+  # changes (new tables/columns, e.g. RefreshToken) and ABORTS on any destructive
+  # change, which trips the rollback trap below — so prod data is never silently
+  # dropped. A destructive schema change therefore fails the deploy on purpose,
+  # forcing a human to apply it deliberately.
+  echo "==> prisma db push (schema sync; aborts on destructive change)"
+  npx prisma db push --skip-generate
+
+  # db push drops triggers/CHECKs it doesn't know about, so re-apply the BillShield
+  # SQL invariants. Non-fatal: a hiccup here must not block the rollout.
+  echo "==> re-applying BillShield invariants (non-fatal)"
+  npm run billshield:invariants || echo "WARN: billshield invariants step failed; continuing" >&2
 
   # Type-check only. The app RUNS via `tsx` (start = "npx tsx src/index.ts"),
   # which transpiles TS directly and ignores type errors — so tsc must NOT
