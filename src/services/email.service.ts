@@ -9,25 +9,39 @@ export default class EmailService {
   private static async initTransporter() {
     if (this.transporter) return;
 
-    const user = process.env.OTP_EMAIL;   // ✅ FIXED
-    const pass = process.env.OTP_PASS;    // ✅ CORRECT
+    const user = process.env.OTP_EMAIL;
+    const pass = process.env.OTP_PASS;
 
     if (!user || !pass) {
       throw new Error("OTP Email credentials missing in .env");
     }
 
+    // Transport is env-configurable so prod can repoint to a reachable relay
+    // (e.g. if the host blocks GoDaddy's outbound SMTP and we need Gmail on 587)
+    // WITHOUT a code change. Defaults keep the existing GoDaddy 465/SSL setup.
+    const host = process.env.OTP_SMTP_HOST || "smtpout.secureserver.net";
+    const port = Number(process.env.OTP_SMTP_PORT) || 465;
+    // 465 = implicit TLS (secure:true); 587/25 = STARTTLS (secure:false).
+    const secure = process.env.OTP_SMTP_SECURE
+      ? process.env.OTP_SMTP_SECURE === "true"
+      : port === 465;
+
     const transporter = nodemailer.createTransport({
-      host: "smtpout.secureserver.net",
-      port: 465,
-      secure: true,
-      auth: {
-        user,
-        pass,
-      },
+      host,
+      port,
+      secure,
+      auth: { user, pass },
+      requireTLS: !secure, // enforce STARTTLS on 587/25
+      // Fail fast instead of letting a blocked/hung connection sit there. The
+      // OTP send is fire-and-forget, so a long hang just wastes a socket.
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 15_000,
+      tls: { servername: host },
     });
 
     await transporter.verify();
-    console.log("✅ OTP Email transporter verified (GoDaddy)");
+    console.log(`✅ OTP Email transporter verified (${host}:${port})`);
 
     this.transporter = transporter;
   }
