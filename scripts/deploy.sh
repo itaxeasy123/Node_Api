@@ -53,18 +53,35 @@ build_and_start() {
   echo "==> prisma generate"
   npm run generate
 
-  # Sync the DB schema to match the code. The prod DB is managed with `db push`
-  # (no _prisma_migrations history), so db push — NOT `migrate deploy` — is the
-  # correct tool. Without --accept-data-loss, db push applies only SAFE additive
-  # changes (new tables/columns, e.g. RefreshToken) and ABORTS on any destructive
-  # change, which trips the rollback trap below — so prod data is never silently
-  # dropped. A destructive schema change therefore fails the deploy on purpose,
-  # forcing a human to apply it deliberately.
-  echo "==> prisma db push (schema sync; aborts on destructive change)"
-  npx prisma db push --skip-generate
+  # ---------------------- Database migrations (automatic) ----------------------
+  # `prisma migrate deploy` applies ONLY committed migration files, in order, and
+  # is safe to run on every deploy — it never invents destructive changes.
+  #
+  # The one case it can't handle is a database that predates Prisma Migrate
+  # (tables present but no `_prisma_migrations` history) — it aborts with P3005.
+  # Our prod DB started life under `db push`, so the FIRST deploy hits exactly
+  # that. Since prod data is disposable, we rebuild the schema from migrations
+  # ONCE to establish history (self-heals). After that, only `migrate deploy`
+  # runs. Any OTHER failure is a real migration bug → fail the deploy so the ERR
+  # trap rolls back; we never silently wipe data on an unexpected error.
+  echo "==> prisma migrate deploy"
+  set +e
+  migrate_out="$(npx prisma migrate deploy 2>&1)"; migrate_rc=$?
+  set -e
+  printf '%s\n' "$migrate_out"
+  if [ "$migrate_rc" -ne 0 ]; then
+    if printf '%s' "$migrate_out" | grep -q "P3005"; then
+      echo "==> DB not yet migration-managed (P3005) — baselining from migrations (one-time; prod data is disposable)"
+      npx prisma migrate reset --force --skip-seed
+    else
+      echo "ERROR: 'prisma migrate deploy' failed with a real migration error — aborting (rollback)." >&2
+      return 1
+    fi
+  fi
 
-  # db push drops triggers/CHECKs it doesn't know about, so re-apply the BillShield
-  # SQL invariants. Non-fatal: a hiccup here must not block the rollout.
+  # `migrate reset` (and some migrations) drop triggers/CHECKs Prisma doesn't
+  # track, so re-apply the BillShield SQL invariants. Non-fatal: a hiccup here
+  # must not block an otherwise-healthy rollout.
   echo "==> re-applying BillShield invariants (non-fatal)"
   npm run billshield:invariants || echo "WARN: billshield invariants step failed; continuing" >&2
 
