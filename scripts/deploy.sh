@@ -54,34 +54,18 @@ build_and_start() {
   npm run generate
 
   # ---------------------- Database migrations (automatic) ----------------------
-  # `prisma migrate deploy` applies ONLY committed migration files, in order, and
-  # is safe to run on every deploy — it never invents destructive changes.
+  # Apply ONLY committed migration files, in order. This NEVER resets or wipes
+  # data — `migrate deploy` only runs the SQL in the migration files. If it fails
+  # (a bad migration), the command errors, the ERR trap rolls back to the previous
+  # release, and a human fixes the migration. There is deliberately NO reset here.
   #
-  # The one case it can't handle is a database that predates Prisma Migrate
-  # (tables present but no `_prisma_migrations` history) — it aborts with P3005.
-  # Our prod DB started life under `db push`, so the FIRST deploy hits exactly
-  # that. Since prod data is disposable, we rebuild the schema from migrations
-  # ONCE to establish history (self-heals). After that, only `migrate deploy`
-  # runs. Any OTHER failure is a real migration bug → fail the deploy so the ERR
-  # trap rolls back; we never silently wipe data on an unexpected error.
+  # NOTE: the prod DB was baselined into Prisma Migrate ONCE, by hand. From then
+  # on, every `git push` of a new migration applies automatically via this line.
   echo "==> prisma migrate deploy"
-  set +e
-  migrate_out="$(npx prisma migrate deploy 2>&1)"; migrate_rc=$?
-  set -e
-  printf '%s\n' "$migrate_out"
-  if [ "$migrate_rc" -ne 0 ]; then
-    if printf '%s' "$migrate_out" | grep -q "P3005"; then
-      echo "==> DB not yet migration-managed (P3005) — baselining from migrations (one-time; prod data is disposable)"
-      npx prisma migrate reset --force --skip-seed
-    else
-      echo "ERROR: 'prisma migrate deploy' failed with a real migration error — aborting (rollback)." >&2
-      return 1
-    fi
-  fi
+  npx prisma migrate deploy
 
-  # `migrate reset` (and some migrations) drop triggers/CHECKs Prisma doesn't
-  # track, so re-apply the BillShield SQL invariants. Non-fatal: a hiccup here
-  # must not block an otherwise-healthy rollout.
+  # Some migrations drop triggers/CHECKs Prisma doesn't track, so re-apply the
+  # BillShield SQL invariants. Non-fatal: a hiccup here must not block the rollout.
   echo "==> re-applying BillShield invariants (non-fatal)"
   npm run billshield:invariants || echo "WARN: billshield invariants step failed; continuing" >&2
 
