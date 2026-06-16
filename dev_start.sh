@@ -29,7 +29,7 @@ PG_IMAGE="postgres:16"
 REDIS_IMAGE="redis:7-alpine"
 PG_PASSWORD="Akshat@1234"   # matches DATABASE_URL (Akshat%401234)
 PG_DB="ITAX"
-PG_PORT="5555"              # host:5555 -> container:5432
+PG_PORT="53001"             # host:53001 -> container:5432 (5555 collides with the Android emulator's ADB port)
 REDIS_PORT="6379"
 
 log()  { printf "\n\033[1;34m▶ %s\033[0m\n" "$1"; }

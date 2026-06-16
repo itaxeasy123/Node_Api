@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 import EmailService from "../services/email.service";
 import TokenService from "../services/token.service";
 import AuthService, { REFRESH_COOKIE } from "../services/auth.service";
-import { UserGender, UserType } from "@prisma/client";
+import { UserGender, UserType, Prisma } from "@prisma/client";
 import { ZodError, z } from "zod";
 import { uploadToCloudinary } from "../config/cloudinaryUploader";
 import MobileService from "../services/mobile.service";
@@ -444,6 +444,19 @@ export default class UserController {
       });
     } catch (error) {
       console.error("Login error:", error);
+      if (error instanceof Prisma.PrismaClientInitializationError) {
+        return res.status(503).json({
+          success: false,
+          message: "Database unavailable",
+        });
+      }
+      if (error instanceof ZodError) {
+        return res.status(400).json({
+          success: false,
+          message: "Invalid input",
+          errors: error.issues,
+        });
+      }
       return res.status(500).json({
         success: false,
         message: "Internal server error",
