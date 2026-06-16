@@ -191,33 +191,43 @@ app.use(express.urlencoded({ extended: true }));
    CORS
 ======================= */
 const allowedOrigins = [
+  // Production web
+  "https://itaxeasy.com",
+  "https://www.itaxeasy.com",
+  // Local dev
   "http://localhost:3001",
   "http://localhost:3000",
   "http://localhost:5173",
   // Expo (Metro web + dev client)
   "http://localhost:8081",
   "http://192.168.7.15:8081",
+  // Extra origins via env (comma-separated), e.g. CORS_ORIGINS="https://staging.itaxeasy.com"
+  ...(process.env.CORS_ORIGINS
+    ? process.env.CORS_ORIGINS.split(",").map((o) => o.trim()).filter(Boolean)
+    : []),
 ];
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
+// Shared options so the global middleware AND the preflight handler behave
+// identically. With credentials:true the response must echo the specific
+// origin and set Access-Control-Allow-Credentials: true (never "*").
+const corsOptions: import("cors").CorsOptions = {
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true); // non-browser clients (Postman, native app, SSR)
 
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      }
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
 
-      console.warn("❌ Blocked by CORS:", origin);
-      return callback(null, false);
-    },
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+    console.warn("❌ Blocked by CORS:", origin);
+    return callback(null, false);
+  },
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
 
-app.options("*", cors());
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 /* =======================
    SECURITY
