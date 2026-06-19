@@ -234,6 +234,20 @@ export default class UserController {
         phone,
       }: UserSchemaType = UserSchema.parse(req.body);
 
+      // Reject re-registration of an account that already exists and is
+      // verified. Without this, the upsert below silently overwrites the
+      // existing user (and in production resets them to verified:false,
+      // locking them out). Tell the client to log in instead — the app/web
+      // handle this 409 by routing to the login screen. An existing but
+      // UNVERIFIED account falls through so the user can finish verifying.
+      const existingUser = await prisma.user.findUnique({ where: { email } });
+      if (existingUser && existingUser.verified) {
+        return res.status(409).send({
+          success: false,
+          message: "User already exists! Please login with your email address.",
+        });
+      }
+
       // Hash password
       const hashedPassword = await UserController.hashPassword(password);
 
